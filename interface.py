@@ -141,17 +141,17 @@ verif_freq, df_vm_prep, delta_f_x, delat_f_y = (valeurs_modales.analyse_valeurs_
 st.subheader("Analyse des modes préponderants")
 # Affichage de l'état de la vérification des écarts de fréquences
 if verif_freq:
-    st.success("Les écarts de fréquences des modes prépondérants ne dépassent pas la limite fixée de 15%")
+    st.success(f"Les écarts de fréquences des modes prépondérants ne dépassent pas la limite fixée de {ecart_max_freq*100} %")
 else:
-    st.error("Attention, les écarts de fréquences sont supérieurs à la limite fixée de 15 %")
+    st.error(f"Attention, les écarts de fréquences sont supérieurs à la limite fixée de {ecart_max_freq*100} %")
 # Affichage du DF
 st.dataframe(df_vm_prep, use_container_width=True, hide_index=True)
 # Séparation en 2 colonnes et affichages des écarts de fréquences suivant les 2 axes
 col3, col4 = st.columns(2)
 with col3:
-    st.info(f"Ecart des fréquences suivant x : {round(delta_f_x*100, 1)}% ")
+    st.info(f"Ecart des fréquences suivant x : {round(delta_f_x*100, 2)}% ")
 with col4:
-    st.info(f"Ecart des fréquences suivant y : {round(delat_f_y*100, 1)}%")
+    st.info(f"Ecart des fréquences suivant y : {round(delat_f_y*100, 2)}%")
 st.divider()
 #-----------------------------------------------------------------------------------------------------------------------
 #                                     Analyse des efforts dans les rupteurs
