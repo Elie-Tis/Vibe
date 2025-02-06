@@ -90,8 +90,9 @@ def verifier_efforts_slabe(efforts_max, resistance_slabe, gamma):
         print("EFFORT MAX :: ","\n",efforts_max)
         for effort in efforts_max[slabe]:  # On itère sur tous les efforts
 # On vérifie si l'effort ne dépasse pas l'effort resistant du rupteur
-            resistance_verifiee = abs(efforts_max[slabe][effort]) * gamma - resistance_slabe[slabe][effort+"_Rd"] <= 0
-            if resistance_verifiee == False:  # On passe validation a 0 si un des efforts resistant est dépassé
+            res_slabe = 0 if not slabe in resistance_slabe else resistance_slabe.get(slabe).get(effort+"_Rd")  # On evite l'erreur de clée inexistante dans le dict (mauvais matériaux)
+            resistance_verifiee = abs(efforts_max[slabe][effort]) * gamma - res_slabe <= 0
+            if resistance_verifiee == False or res_slabe==0:  # On passe validation a 0 si un des efforts resistant est dépassé ou si erreur matériaux
                 validation = False
             resistance_slabe_verifiee[slabe][effort] = resistance_verifiee
 
