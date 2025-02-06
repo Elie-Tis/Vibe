@@ -384,7 +384,7 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
     df_torseurs_voiles_glob["Ecart_TX",] = (df_torseurs_voiles_glob["TX_rupt"].astype(float) /
                                         df_torseurs_voiles_glob["TX_base"].astype(float) -1
                                         )
-    df_torseurs_voiles_glob["Ecart_TY",] = (df_torseurs_voiles_glob["TY)_rupt"].astype(float) /
+    df_torseurs_voiles_glob["Ecart_TY",] = (df_torseurs_voiles_glob["TY_rupt"].astype(float) /
                                     df_torseurs_voiles_glob["TX_base"].astype(float) -1
                                     )
     
