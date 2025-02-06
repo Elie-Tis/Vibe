@@ -315,7 +315,7 @@ else:
     st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
                f"({ecart_max_voiles*100}%)")
 
-st.dataframe(df_voiles_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset="Ecart"),
+st.dataframe(df_voiles_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX", "Ecart_TY"]),
              hide_index=True,
              use_container_width=True)
 
