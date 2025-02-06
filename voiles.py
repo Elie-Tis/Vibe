@@ -335,33 +335,38 @@ def analyse_efforts_voiles(page_efforts_voiles_rupt, page_efforts_voiles_base, e
 
 def nettoyer_torseur_voiles_etages(page_torseurs_voiles):
     torseurs_voiles = page_torseurs_voiles.split("\n")
-# Récupération de data de la page de description
     torseurs_voiles = [ligne.split("\t") for ligne in torseurs_voiles if "\t" in ligne]
     df_torseurs_voiles = pd.DataFrame(torseurs_voiles)
-# Renommer les colonnes
+    # Renommer les colonnes
     noms_colonnes = df_torseurs_voiles.iloc[1,:].to_list()
     noms_colonnes = [col.replace(r"\par", "").replace(" ", "_") for col in noms_colonnes]
     df_torseurs_voiles.columns = noms_colonnes
     df_torseurs_voiles.drop(index=[0, 1], inplace=True)
     df_torseurs_voiles.ffill(inplace=True)
-# Remplissage des cases vides
+    # Remplissage des cases vides
     df_torseurs_voiles.replace(r'^\s*$', nan, regex=True, inplace=True)
     df_torseurs_voiles.ffill(inplace=True)
-# On ne conserve que les cas de charges 3 et 4
+    # On ne conserve que les cas de charges 3 et 4
     df_torseurs_voiles = df_torseurs_voiles.loc[
         df_torseurs_voiles["Cas_de_charges"].isin(["3 (CQC)", "4 (CQC)"]),
-        ["Cas_de_charges", "Nom_Étage", "TX_TX_haut_TX_bas_(kN)"]
-    ]
+        ["Cas_de_charges", "Nom_Étage", "TX_TX_haut_TX_bas_(kN)", "TY_TY_haut_TY_bas_(kN)"]]
     df_torseurs_voiles.reset_index(drop=True, inplace=True)
-# On conserve les valeurs de TX_bas, qui ont des index impaires
-    df_torseurs_voiles = df_torseurs_voiles.loc[
-        [i for i in range(1, df_torseurs_voiles.shape[0],2)], : # Parcours des index de 2 en 2 en partant de 1
-    ]
-    df_torseurs_voiles.rename(columns={"TX_TX_haut_TX_bas_(kN)": "TX_bas"}, inplace=True)
-    df_torseurs_voiles["TX_bas"] = df_torseurs_voiles["TX_bas"].apply(pd.to_numeric)
-# On crée une colonne avec des valeurs uniques pour servir de clée
-    df_torseurs_voiles["key"] = df_torseurs_voiles["Cas_de_charges"] + df_torseurs_voiles["Nom_Étage"]
-    print(f"TORSEUR VOILES PAR ETAGES /n{df_torseurs_voiles}")
+    # Selection des colonnes utiles
+    df_torseurs_voiles = df_torseurs_voiles[["Nom_Étage", "Cas_de_charges", "TX_TX_haut_TX_bas_(kN)", "TY_TY_haut_TY_bas_(kN)"]]
+    df_torseurs_voiles.columns = ["Nom_Etage", "Cas_de_charges", "TX", "TY"]  # Renome les colonnes
+    df_torseurs_voiles.loc[:,"Nom_Etage"] = df_torseurs_voiles.loc[:,"Nom_Etage"].apply(lambda x: "R+0" if x=="RDC" else x) # Passage RDC -> R+0  "pour le tri"
+    #Séparation des efforts hauts et bas
+    df_torseurs_voiles_haut = df_torseurs_voiles.loc[
+        [i for i in range(0, df_torseurs_voiles.shape[0],2)], :] # Parcours des index de 2 en 2 en partant de 0
+    df_torseurs_voiles_haut["loc"] = "haut"
+    df_torseurs_voiles_bas = df_torseurs_voiles.loc[
+        [i for i in range(1, df_torseurs_voiles.shape[0],2)], :] # Parcours des index de 2 en 2 en partant de 1
+    df_torseurs_voiles_bas["loc"] = "bas"
+    # Rassemblement des DF
+    df_torseurs_voiles = pd.concat([df_torseurs_voiles_haut, df_torseurs_voiles_bas],).sort_values(by=["Nom_Etage", "Cas_de_charges", "loc"], ascending=[False, True, False],)
+    df_torseurs_voiles = df_torseurs_voiles[["Nom_Etage", "Cas_de_charges", "loc", "TX", "TY"]]
+    # Clé d'identification
+    df_torseurs_voiles["key"] = df_torseurs_voiles["Nom_Etage"] + "_" + df_torseurs_voiles["Cas_de_charges"] + "_"+  df_torseurs_voiles["loc"]
     return df_torseurs_voiles
 
 
@@ -371,20 +376,24 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
     nom_col_base = [nom+"_base" for nom in nom_col]
     df_torseurs_voiles_rupt.columns = nom_col_rupt
     df_torseurs_voiles_base.columns = nom_col_base
-    df_torseurs_voiles_glob = pd.merge(df_torseurs_voiles_rupt, df_torseurs_voiles_base[["TX_bas_base", "key_base"]],
+    df_torseurs_voiles_glob = pd.merge(df_torseurs_voiles_rupt, df_torseurs_voiles_base[["TX_base", "TY_base", "key_base"]],
                                        left_on=["key_rupt"],
                                        right_on=["key_base"],
                                        how="left"
                                        )
-    df_torseurs_voiles_glob["Ecart"] = (df_torseurs_voiles_glob["TX_bas_rupt"].astype(float) /
-                                        df_torseurs_voiles_glob["TX_bas_base"].astype(float) -1
+    df_torseurs_voiles_glob["Ecart_TX",] = (df_torseurs_voiles_glob["TX_rupt"].astype(float) /
+                                        df_torseurs_voiles_glob["TX_base"].astype(float) -1
                                         )
+    df_torseurs_voiles_glob["Ecart_TY",] = (df_torseurs_voiles_glob["TY)_rupt"].astype(float) /
+                                    df_torseurs_voiles_glob["TX_base"].astype(float) -1
+                                    )
+    
     df_torseurs_voiles_glob.drop(columns=["key_rupt", "key_base"], inplace=True)
     df_torseurs_voiles_glob.rename(columns={"Cas_de_charges_rupt": "Cas_de_charges",
-                                            "Nom_Étage_rupt": "Etage"}, inplace=True)
+                                            "Nom_Etage_rupt": "Etage"}, inplace=True)
 # Modification de l'ordre des colonnes
-    df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "TX_bas_rupt", "TX_bas_base", "Ecart"]]
-    df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=True, inplace=True)
+    df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "TX_base", "TY)_base", "TX)_rupt", "TY_rupt", "Ecart_TX", "Ecart_TY]]
+    df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=[False, True], inplace=True)
     df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[df_torseurs_voiles_glob["Ecart"] >= ecart_limite, :]
     if df_torseurs_voiles_defect.empty:
         verification = True
