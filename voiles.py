@@ -399,8 +399,9 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
         #verification = True
     #else:
         #verification = False
+    verification=True
 
-    return verification=True, df_torseurs_voiles_defect, df_torseurs_voiles_glob
+    return verification, df_torseurs_voiles_defect, df_torseurs_voiles_glob
 
 def analyser_torseurs_voiles_etages(page_torseurs_voiles_rupt, page_torseurs_voiles_base, ecart_limite):
     df_torseurs_voiles_rupt = nettoyer_torseur_voiles_etages(page_torseurs_voiles_rupt)
