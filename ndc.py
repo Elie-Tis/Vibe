@@ -10,6 +10,7 @@ resistance_slabe = {"SLABE8_Zs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 46.55, "Fz_R
                     "SLABE8_ZAs_final": {"Fx_Rd": 55.44, "Fy_Rd": 33.10, "Fz_Rd": 23.06},
                     "SLABE8_ZZs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13},
                     "SLABE8_ZZs_final": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13},
+                    "SLABE": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13}
                     }
 
 # Valeurs du psi pour les différents modèles de Slabe  ***** A COMPLETER AVEC LES VALEURS REELLES *****
@@ -53,8 +54,8 @@ def analyse_ndc(path_rupteur, path_base):
     # Initialisation chrono
     start = time.time()
     # Récupération des pages des 2 notes de calculs
-    pages_rupt = get_pages(path=path_rupteur, rupteur=True)
-    pages_base = get_pages(path=path_base,rupteur=False)
+    pages_rupt = get_pages_st(path=path_rupteur, rupteur=True)
+    pages_base = get_pages_st(path=path_base,rupteur=False)
     # Analyse de la géométrie des modèles
     geo_hypo.analyse_geometrie(pages_rupt["Geometrie"], pages_base["Geometrie"])
     #Analyse des hypothèses des modèles

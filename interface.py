@@ -225,14 +225,14 @@ verif_voiles_indiv, df_ecarts_efforts_voiles, df_voiles_defect = (
         ecart_max=ecart_max_voiles
     ))
 # Récupération des Df et indicateurs de vérification des efforts par étages pondérés par l'inertie
-verif_voiles_pond, df_voiles_defect_pond, df_glob_pond, df_geo, dftest = voiles.analyse_voiles_pond(
+""" verif_voiles_pond, df_voiles_defect_pond, df_glob_pond, df_geo, dftest = voiles.analyse_voiles_pond(
     page_efforts_voiles_rupt=pages_rupteur["Torseurs_voiles"],
     page_efforts_voiles_base=pages_base["Torseurs_voiles"],
     page_epaisseurs_voiles=pages_rupteur["Epaisseurs_voiles"],
     page_description_voiles_rupt=pages_rupteur["Coordonnées_voiles"],
-    page_description_voiles_base= pages_base["Coordonnées_voiles"],
+    page_description_voiles_base=pages_base["Coordonnées_voiles"],
     ecart_max=ecart_max_voiles
-)
+) """
 # Récupération des DF et indicateurs de vérification des torseurs (TX, TY, etc.) par étages
 verif_voile_etage, df_voiles_defect_etages, df_voiles_glob_etages = voiles.analyser_torseurs_voiles_etages(
     page_torseurs_voiles_rupt=pages_rupteur["Torseurs_etages_voiles"],
@@ -287,7 +287,7 @@ if choix_ecarts:
 # Méthode de vérification des efforts dans les voiles pondérés par l'inertie
 #............................................................................
 # Affichage retractable pour les résultats de la méthode
-st.markdown("#### *B. Vérification des voiles par étage avec pondération inertielle*")
+""" st.markdown("#### *B. Vérification des voiles par étage avec pondération inertielle*")
 # Affichage de l'état de vérification des écarts d'effrots
 if verif_voiles_pond:
     st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
@@ -299,7 +299,7 @@ else:
 st.dataframe(df_glob_pond.loc[:,['n°_etage', "cas_de_charge", "txy_moy_pond_rupt", "txy_moy_pond_base", "ecart"]
              ].style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset="ecart"),
              hide_index=True,
-             use_container_width=True)
+             use_container_width=True) """
 
 
 #............................................................................
