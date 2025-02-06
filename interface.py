@@ -287,19 +287,19 @@ if choix_ecarts:
 # Méthode de vérification des efforts dans les voiles pondérés par l'inertie
 #............................................................................
 # Affichage retractable pour les résultats de la méthode
-""" st.markdown("#### *B. Vérification des voiles par étage avec pondération inertielle*")
-# Affichage de l'état de vérification des écarts d'effrots
-if verif_voiles_pond:
-    st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
-               f"de {ecart_max_voiles*100}%")
-else:
-    st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
-               f"({ecart_max_voiles*100}%)")
+# st.markdown("#### *B. Vérification des voiles par étage avec pondération inertielle*")
+# # Affichage de l'état de vérification des écarts d'effrots
+# if verif_voiles_pond:
+#     st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
+#                f"de {ecart_max_voiles*100}%")
+# else:
+#     st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
+#                f"({ecart_max_voiles*100}%)")
 
-st.dataframe(df_glob_pond.loc[:,['n°_etage', "cas_de_charge", "txy_moy_pond_rupt", "txy_moy_pond_base", "ecart"]
-             ].style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset="ecart"),
-             hide_index=True,
-             use_container_width=True) """
+# st.dataframe(df_glob_pond.loc[:,['n°_etage', "cas_de_charge", "txy_moy_pond_rupt", "txy_moy_pond_base", "ecart"]
+#              ].style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset="ecart"),
+#              hide_index=True,
+#              use_container_width=True)
 
 
 #............................................................................
