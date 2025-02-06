@@ -400,6 +400,7 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
     #else:
         #verification = False
     verification=True
+    df_torseurs_voiles_defect = 0
 
     return verification, df_torseurs_voiles_defect, df_torseurs_voiles_glob
 
