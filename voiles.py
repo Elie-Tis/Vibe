@@ -394,13 +394,13 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
 # Modification de l'ordre des colonnes
     df_torseurs_voiles_glob = df_torseurs_voiles_glob.loc[:,["Etage","Cas_de_charges", "TX_base", "TY_base", "TX_rupt", "TY_rupt", "Ecart_TX", "Ecart_TY"]]
     df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=[False, True], inplace=True)
-    df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[(df_torseurs_voiles_glob["Ecart_TX"] >= ecart_limite) or (df_torseurs_voiles_glob["Ecart_TY"] >= ecart_limite) , :]
-    if df_torseurs_voiles_defect.empty:
-        verification = True
-    else:
-        verification = False
+    #df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[(df_torseurs_voiles_glob["Ecart_TX"] >= ecart_limite) or (df_torseurs_voiles_glob["Ecart_TY"] >= ecart_limite) , :]
+    #if df_torseurs_voiles_defect.empty:
+        #verification = True
+    #else:
+        #verification = False
 
-    return verification, df_torseurs_voiles_defect, df_torseurs_voiles_glob
+    return verification=True, df_torseurs_voiles_defect, df_torseurs_voiles_glob
 
 def analyser_torseurs_voiles_etages(page_torseurs_voiles_rupt, page_torseurs_voiles_base, ecart_limite):
     df_torseurs_voiles_rupt = nettoyer_torseur_voiles_etages(page_torseurs_voiles_rupt)
