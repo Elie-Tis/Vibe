@@ -382,11 +382,11 @@ def verifier_torseurs_voiles_etages(df_torseurs_voiles_rupt, df_torseurs_voiles_
                                        how="left"
                                        )
     df_torseurs_voiles_glob["Ecart_TX"] = (df_torseurs_voiles_glob["TX_rupt"].astype(float) /
-                                        df_torseurs_voiles_glob["TX_base"].astype(float) -1
-                                        )
+                                        df_torseurs_voiles_glob["TX_base"].astype(float)) -1
+                                        
     df_torseurs_voiles_glob["Ecart_TY"] = (df_torseurs_voiles_glob["TY_rupt"].astype(float) /
-                                    df_torseurs_voiles_glob["TY_base"].astype(float) -1
-                                    )
+                                    df_torseurs_voiles_glob["TY_base"].astype(float)) -1
+                                    
     
     df_torseurs_voiles_glob.drop(columns=["key_rupt", "key_base"], inplace=True)
     df_torseurs_voiles_glob.rename(columns={"Cas_de_charges_rupt": "Cas_de_charges",
