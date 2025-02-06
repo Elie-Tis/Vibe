@@ -115,8 +115,8 @@ def analyse_valeurs_modales(page_val_mod_rupt, page_val_mod_base, ecart_max_freq
     df_val_mod_rupt_prep["Rupteurs"] = "Oui"
     df_val_mod_base_prep["Rupteurs"] = "Non"
     # On crée un DF en rassemblant les DF avec et sans rupteur
-    df_val_mod_prep = pd.concat([df_val_mod_rupt_prep, df_val_mod_base_prep]).sort_values(by='Direction',
-                                                                                          ascending=True)
+    df_val_mod_prep = pd.concat([df_val_mod_rupt_prep, df_val_mod_base_prep]).sort_values(by=['Direction', "Rupteur"],
+                                                                                          ascending=[True, False])
 
     # Calcul des ratios de fréquences des modes prépondérants
     verif_freq, ecart_freq_x, ecart_freq_y = verif_ecart_val_mod(val_mod_rupt_prep, val_mod_base_prep, ecart_max_freq_pc)
