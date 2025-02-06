@@ -80,6 +80,8 @@ def get_valeurs_modales_prep(dataframe):
                                   "My_kg": m_prep_y
                                   }
                             }
+    # On recalcule les période pour une meilleure précision
+     df_val_mod_prep["Periode_s"] = df_val_mod_prep["Frequence_Hz"].apply(lambda x: round(1/x, 2))
 
     return valeurs_modales_prep, df_val_mod_prep
 
