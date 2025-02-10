@@ -151,7 +151,7 @@ def verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs
                                            "loc_rupt": "loc"}, inplace=True)
 # Modification de l'ordre des colonnes
     df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "loc", "TX_base", "TY_base", "TX_rupt", "TY_rupt", "Ecart_TX", "Ecart_TY"]]
-    df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=True, inplace=True)
+    df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges", "loc"], ascending=[False, True, False], inplace=True)
     # Détection des étages défectueux
     filtre_defect = (df_torseurs_voiles_glob["Ecart_TX"] >= ecart_limite) | (df_torseurs_voiles_glob["Ecart_TY"] >= ecart_limite)
     df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[filtre_defect, :]
