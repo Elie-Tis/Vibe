@@ -147,7 +147,8 @@ def verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs
     
     df_torseurs_voiles_glob.drop(columns=["key_rupt", "key_base"], inplace=True)
     df_torseurs_voiles_glob.rename(columns={"Cas_de_charges_rupt": "Cas_de_charges",
-                                            "Etage_rupt": "Etage"}, inplace=True)
+                                            "Etage_rupt": "Etage",
+                                           "loc_rupt": "loc"}, inplace=True)
 # Modification de l'ordre des colonnes
     df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "loc", "TX_base", "TY_base", "TX_rupt", "TY_rupt", "Ecart_TX", "Ecart_TY"]]
     df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=True, inplace=True)
