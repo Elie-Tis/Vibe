@@ -308,7 +308,7 @@ if choix_ecarts:
 # Affichage retractable pour les résultats de la méthode
 st.markdown("#### *C. Vérification des torseurs par étage*")
 # Affichage de l'état de vérification des écarts d'efforts
-if verif_voile_etage:
+if verif_voile_int_etage:
     st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
                f"de {ecart_max_voiles*100}%")
 else:
