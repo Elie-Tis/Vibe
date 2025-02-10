@@ -235,8 +235,8 @@ verif_voiles_indiv, df_ecarts_efforts_voiles, df_voiles_defect = (
 # )
 # Récupération des DF et indicateurs de vérification des torseurs (TX, TY, etc.) par étages
 verif_voile_int_etage, df_voiles_int_defect_etages, df_voiles_int_glob_etages = voiles_V2.analyser_torseurs_voiles_int_etages(
-    page_torseurs_voiles_rupt=pages_rupteur["Torseurs_etages_voiles"],
-    page_torseurs_voiles_base=pages_base["Torseurs_etages_voiles"],
+    page_torseurs_voiles_int_rupt=pages_rupteur["Torseurs_etages_voiles"],
+    page_torseurs_voiles_int_base=pages_base["Torseurs_etages_voiles"],
     ecart_limite=ecart_max_voiles
 )
 # Sous titre
