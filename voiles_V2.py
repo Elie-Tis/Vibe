@@ -132,7 +132,7 @@ def verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs
     nom_col_base = [nom+"_base" for nom in nom_col]
     df_torseurs_voiles_int_rupt.columns = nom_col_rupt
     df_torseurs_voiles_int_base.columns = nom_col_base
-    df_torseurs_voiles_glob = pd.merge(df_torseurs_voiles_int_rupt, df_torseurs_voiles_int_base[["TX_base", "TY_base, "key_base"]],
+    df_torseurs_voiles_glob = pd.merge(df_torseurs_voiles_int_rupt, df_torseurs_voiles_int_base[["TX_base", "TY_base", "key_base"]],
                                        left_on=["key_rupt"],
                                        right_on=["key_base"],
                                        how="left"
