@@ -137,16 +137,23 @@ def verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs
                                        right_on=["key_base"],
                                        how="left"
                                        )
-    df_torseurs_voiles_glob["Ecart"] = (df_torseurs_voiles_glob["TX_bas_rupt"].astype(float) /
-                                        df_torseurs_voiles_glob["TX_bas_base"].astype(float) -1
+    df_torseurs_voiles_glob["Ecart_TX"] = (df_torseurs_voiles_glob["TX_rupt"].astype(float) /
+                                        df_torseurs_voiles_glob["TX_base"].astype(float) -1
                                         )
+     df_torseurs_voiles_glob["Ecart_TY"] = (df_torseurs_voiles_glob["TY_rupt"].astype(float) /
+                                        df_torseurs_voiles_glob["TY_base"].astype(float) -1
+                                        )
+
+    
     df_torseurs_voiles_glob.drop(columns=["key_rupt", "key_base"], inplace=True)
     df_torseurs_voiles_glob.rename(columns={"Cas_de_charges_rupt": "Cas_de_charges",
                                             "Nom_Étage_rupt": "Etage"}, inplace=True)
 # Modification de l'ordre des colonnes
-    df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "TX_bas_rupt", "TX_bas_base", "Ecart"]]
+    df_torseurs_voiles_glob = df_torseurs_voiles_glob[["Etage","Cas_de_charges", "TX_base", "TY_base", "TX_rupt", "TYrupte", "Ecart_TX", "Ecart_TY"]]
     df_torseurs_voiles_glob.sort_values(by=["Etage","Cas_de_charges"], ascending=True, inplace=True)
-    df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[df_torseurs_voiles_glob["Ecart"] >= ecart_limite, :]
+    # Détection des étages défectueux
+    filtre_defect = (df_torseurs_voiles_glob["Ecart_TX"] >= ecart_limite) | (df_torseurs_voiles_glob["Ecart_TY"] >= ecart_limite)
+    df_torseurs_voiles_defect = df_torseurs_voiles_glob.loc[filtre_defect, :]
     if df_torseurs_voiles_defect.empty:
         verification = True
     else:
