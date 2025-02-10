@@ -77,8 +77,8 @@ def analyse_voile_indiv(page_efforts_voiles_rupt, page_efforts_voiles_base, ecar
 
 
 
-def nettoyer_torseur_voiles_int_etages(page_torseurs_voiles):
-    torseurs_voiles = page_torseurs_voiles.split("\n")
+def nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_int):
+    torseurs_voiles = page_torseurs_voiles_int.split("\n")
     torseurs_voiles = [ligne.split("\t") for ligne in torseurs_voiles if "\t" in ligne]
     df_torseurs_voiles = pd.DataFrame(torseurs_voiles)
     # Renommer les colonnes
@@ -161,8 +161,12 @@ def verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs
 
     return verification, df_torseurs_voiles_defect, df_torseurs_voiles_glob
 
-def analyser_torseurs_voiles_etages(page_torseurs_voiles_rupt, page_torseurs_voiles_base, ecart_limite):
-    df_torseurs_voiles_int_rupt = nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_rupt)
-    df_torseurs_voiles_int_base = nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_base)
+
+def analyser_torseurs_voiles_int_etages(page_torseurs_voiles_rupt, page_torseurs_voiles_base, ecart_limite):
+    df_torseurs_voiles_int_rupt = nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_int_rupt)
+    df_torseurs_voiles_int_base = nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_int_base)
 
     return verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs_voiles_int_base, ecart_limite)
+
+
+
