@@ -124,11 +124,14 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
     df_efforts_voiles.rename(columns={"N°_Élément": "N°_element"}, inplace=True)  # On évite le é majuscule
     return df_efforts_voiles
 
+#----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
   df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
   df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
   df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
   return df_geo_voiles
+    
 #----------------------------------------------------------------------------------------------------------------------------------------
+
 
 
