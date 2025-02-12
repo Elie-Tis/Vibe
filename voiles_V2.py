@@ -168,4 +168,8 @@ def analyser_torseurs_voiles_int_etages(page_torseurs_voiles_int_rupt, page_tors
     df_torseurs_voiles_int_base = nettoyer_torseur_voiles_int_etages(page_torseurs_voiles_int_base)
 
     return verifier_torseurs_voiles_int_etages(df_torseurs_voiles_int_rupt, df_torseurs_voiles_int_base, ecart_limite)
+    
+
+
+
 
