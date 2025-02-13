@@ -126,17 +126,18 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
     return df_efforts_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
-# On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
-def get_efforts_voiles(df_efforts_voiles, df_coord_voiles, list_cdc=["3 (CQC)", "4 (CQC)"] ):
-    df_efforts_voiles = pd.merge(df_efforts_voiles, df_coord_voiles, on="N°element")  # On assemble les efforts et des coord en fonction du numéro élément
-    return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), :]   # On filtre les cas de charges recherchées
-    
-#----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
   df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
   df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
   df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
   return df_geo_voiles   # Retourne un df avec les coord, et les paramètres géo, inertie, etc...
+
+#----------------------------------------------------------------------------------------------------------------------------------------
+# On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
+def get_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc=["3 (CQC)", "4 (CQC)"] ):
+    df_efforts_voiles = pd.merge(df_efforts_voiles, df_geo_voiles, on="N°element")  # On assemble les efforts et des coord en fonction du numéro élément
+    return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), :]   # On filtre les cas de charges recherchées
+    
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
@@ -160,6 +161,6 @@ def cal_moy_pond_ecart_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
         df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     return df_ecart_moy_pond
     
-    
+    def calc_
     
     
