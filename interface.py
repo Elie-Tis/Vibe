@@ -5,7 +5,7 @@ import voiles
 import streamlit as st
 import pandas as pd
 import geo_hypo
-import voiles_V2
+import voiles_V2, voiles_V3
 
 ########################################################################################################################
 #                                         Page et la barre latéralle
