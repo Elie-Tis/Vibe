@@ -160,7 +160,6 @@ def cal_moy_pond_ecart_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
         df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     return df_ecart_moy_pond
     
-         
     
     
     
