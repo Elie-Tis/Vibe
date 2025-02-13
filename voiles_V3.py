@@ -1,4 +1,4 @@
-art# Lorsque les voiles ne sont pas numérotés de la même manière entre le modèle avec et sans rupteurs, la comparaison des efforts dans les voiles de manière individuelle ne peux plus se baser sur les numéros d'éléments.
+# Lorsque les voiles ne sont pas numérotés de la même manière entre le modèle avec et sans rupteurs, la comparaison des efforts dans les voiles de manière individuelle ne peux plus se baser sur les numéros d'éléments.
 # Il faut donc se rabattre sur l"utilisation des coordonées des voiles. Important de noter que cette méthode ne fonctionne pas dans le cas de modèles avec des refends désolidarisés de la façade !!!!
 
 from numpy import nan, sin, cos, arctan
@@ -147,4 +147,10 @@ def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, , l
         df_ecart_efforts_voiles[f"ecart_rel_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] / df_ecart_efforts_voiles[f"{effort}_base"] - 1  # Ecart relatif (%)
     return df_ecart_efforts_voiles
     
-
+def cal_moy_ecart_voiles(df_ecart_efforts_voiles):
+    df = df_ecart_efforts_voiles.groupby(by="Cas_de_charges", as_index=False, sort=False)
+    moy_pond_voile
+         
+    
+    
+    
