@@ -1,4 +1,4 @@
-# Lorsque les voiles ne sont pas numérotés de la même manière entre le modèle avec et sans rupteurs, la comparaison des efforts dans les voiles de manière individuelle ne peux plus se baser sur les numéros d'éléments.
+art# Lorsque les voiles ne sont pas numérotés de la même manière entre le modèle avec et sans rupteurs, la comparaison des efforts dans les voiles de manière individuelle ne peux plus se baser sur les numéros d'éléments.
 # Il faut donc se rabattre sur l"utilisation des coordonées des voiles. Important de noter que cette méthode ne fonctionne pas dans le cas de modèles avec des refends désolidarisés de la façade !!!!
 
 from numpy import nan, sin, cos, arctan
@@ -126,9 +126,10 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
     return df_efforts_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
-def get_efforts_voiles(df_efforts_voiles, df_coord_voiles, list_cdc=["3 (CQC)", "4 (CQC)"], list_effort=["Txy_bas", "Txy_haut"]):
+# On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
+def get_efforts_voiles(df_efforts_voiles, df_coord_voiles, list_cdc=["3 (CQC)", "4 (CQC)"] ):
     df_efforts_voiles = pd.merge(df_efforts_voiles, df_coord_voiles, on="N°element")  # On assemble les efforts et des coord en fonction du numéro élément
-    return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), list_efforts]
+    return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), :]   # On filtre les cas de charges recherchées
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
@@ -139,7 +140,11 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
-def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, )
+def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, , list_effort=["Txy_bas", "Txy_haut"] )
     df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on="id", suffixes=("rupt", "base"))
-    df_ecart_efforts_voiles["ecart_abs"] = 
+    for effort in list_effort:
+        df_ecart_efforts_voiles[f"ecart_abs_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] - df_ecart_efforts_voiles[f"{effort}_base"]    # Ecart absolu (kN)
+        df_ecart_efforts_voiles[f"ecart_rel_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] / df_ecart_efforts_voiles[f"{effort}_base"] - 1  # Ecart relatif (%)
+    return df_ecart_efforts_voiles
+    
 
