@@ -36,12 +36,11 @@ def nettoyer_coord_voiles(page_coord_voiles):
                                                       [f"coord_p0_{i}",f"coord_p1_{i}",f"coord_p2_{i}", f"coord_p3_{i}"]
                                                       ].min(axis=1)
         df_description_voiles.loc[:, f"coord_{i}2"] = df_description_voiles.loc[:,
-                                                      [f"coord_p0_{i}", f"coord_p1_{i}", f"coord_p2_{i}",
-                                                       f"coord_p3_{i}"]
+                                                      [f"coord_p0_{i}", f"coord_p1_{i}", f"coord_p2_{i}", f"coord_p3_{i}"]
                                                       ].max(axis=1)
         df_description_voiles.drop([f"coord_p0_{i}",f"coord_p1_{i}",f"coord_p2_{i}", f"coord_p3_{i}"], axis=1, inplace=True)
 # Création d'une collonne identifiant
-        df_description_voiles["id"] = [df_description_voiles["col"] for col in ["coord_x1", "coord_x2", "coord_y1", "coord_y2", "coord_z1", "coord_z2"]
+        df_description_voiles["id"] = [df_description_voiles["col"] for col in ["coord_x1", "coord_x2", "coord_y1", "coord_y2", "coord_z1", "coord_z2"]]
     return df_description_voiles
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -128,9 +127,8 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
 
 #----------------------------------------------------------------------------------------------------------------------------------------
 def get_efforts_voiles(df_efforts_voiles, df_coord_voiles, list_cdc=["3 (CQC)", "4 (CQC)"], list_effort=["Txy_bas", "Txy_haut"]):
-    df_efforts_voiles = pd.merge(df_efforts_voiles, df_coord_voiles, on="N°element")  # On assemble les effort et des coord en fonction du numéro élément
-    df_effort_voiles["id"] = df_effort_voiles[""]
-    return df_efforts_voiles
+    df_efforts_voiles = pd.merge(df_efforts_voiles, df_coord_voiles, on="N°element")  # On assemble les efforts et des coord en fonction du numéro élément
+    return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), list_efforts]
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
@@ -141,6 +139,7 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
-def calc_ecart_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, )
-    df_
+def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, )
+    df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on="id", suffixes=("rupt", "base"))
+    df_ecart_efforts_voiles["ecart_abs"] = 
 
