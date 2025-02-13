@@ -140,7 +140,7 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
-def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, , list_effort=["Txy_bas", "Txy_haut"] )
+def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, , list_effort=["Txy_bas", "Txy_haut"] ):
     df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on="id", suffixes=("rupt", "base"))
     for effort in list_effort:
         df_ecart_efforts_voiles[f"ecart_abs_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] - df_ecart_efforts_voiles[f"{effort}_base"]    # Ecart absolu (kN)
