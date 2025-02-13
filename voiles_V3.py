@@ -149,7 +149,7 @@ def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, lis
     
 def cal_moy_ecart_voiles(df_ecart_efforts_voiles):
     #Moyenne des ecarts pour chaque effort
-    df_moy = df_ecart_efforts_voiles.groupby(by="Cas_de_charges", as_index=False, sort=False)[col for col in df_ecart_efforts_voiles.columns if "ecart" in col].mean()
+    df_moy = df_ecart_efforts_voiles.groupby(by=["Cas_de_charges"], as_index=False, sort=False)[col for col in df_ecart_efforts_voiles.columns if "ecart" in col].mean()
     return df_moy
 
 def cal_moy_pond_ecart_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
