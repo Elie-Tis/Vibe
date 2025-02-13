@@ -16,7 +16,7 @@ def nettoyer_coord_voiles(page_coord_voiles):
     #Création du DataFrame avec des coordonnées
     df_description_voiles = pd.DataFrame(description_voiles)
 # Nettoyage du DF
-    noms_colonnes = ["n°_element", "coord", "a_supr"]
+    noms_colonnes = ["N°_element", "coord", "a_supr"]
     df_description_voiles.columns = noms_colonnes
     df_description_voiles.reset_index(inplace=True, drop=True)
     df_description_voiles.drop(index=[0,1], inplace=True)
@@ -48,12 +48,12 @@ def nettoyer_epaisseurs_voiles(page_epaisseurs_voiles):
     epaisseurs_voiles = page_epaisseurs_voiles.split('\n')
     epaisseurs_voiles = [ligne.split('\t') for ligne in epaisseurs_voiles if '\t' in ligne]
     df_epaisseurs_voiles = pd.DataFrame(epaisseurs_voiles)
-    df_epaisseurs_voiles.columns = ["n°_element", "epaisseur", "asup"]
+    df_epaisseurs_voiles.columns = ["N°_element", "epaisseur", "asup"]
     df_epaisseurs_voiles.drop("asup", axis=1, inplace=True)
     df_epaisseurs_voiles.drop([0,1], axis=0, inplace=True)
 # On converti les epaisseurs en m
     df_epaisseurs_voiles['epaisseur'] = df_epaisseurs_voiles["epaisseur"].apply(pd.to_numeric) / 100
-    df_epaisseurs_voiles["n°_element"] = pd.to_numeric(df_epaisseurs_voiles["n°_element"])
+    df_epaisseurs_voiles["N°_element"] = pd.to_numeric(df_epaisseurs_voiles["N°_element"])
     return df_epaisseurs_voiles
   
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -77,7 +77,7 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
 # On implémentes les étages dans le DF principal
     df_geo_voiles = df_geo_voiles.merge(df_etages, how='outer', on='coord_z1')
 # On ajoute les epaisseurs dans le DF principal
-    df_geo_voiles = pd.merge(df_geo_voiles, df_epaisseurs_voiles, how='outer', on='n°_element')
+    df_geo_voiles = pd.merge(df_geo_voiles, df_epaisseurs_voiles, how='outer', on='N°_element')
 # Calcul des moments quadratiques locaux, X_local suit la direction du voile, Y_local correspond à l'épaisseur
     df_geo_voiles.loc[:, "Ix_loc"] = (df_geo_voiles.loc[:, "longueur"] * df_geo_voiles.loc[:, "epaisseur"] ** 3) / 12
     df_geo_voiles.loc[:, "Iy_loc"] = (df_geo_voiles.loc[:, "epaisseur"] * df_geo_voiles.loc[:, "longueur"] ** 3) / 12
