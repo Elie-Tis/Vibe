@@ -146,11 +146,7 @@ def calc_ecart_effort_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, lis
         df_ecart_efforts_voiles[f"ecart_abs_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] - df_ecart_efforts_voiles[f"{effort}_base"]    # Ecart absolu (kN)
         df_ecart_efforts_voiles[f"ecart_rel_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] / df_ecart_efforts_voiles[f"{effort}_base"] - 1  # Ecart relatif (%)
     return df_ecart_efforts_voiles
-    
-def cal_moy_ecart_voiles(df_ecart_efforts_voiles):
-    #Moyenne des ecarts pour chaque effort
-    df_moy = df_ecart_efforts_voiles.groupby(by=["Cas_de_charges"], as_index=False,)[col for col in df_ecart_efforts_voiles.columns if "ecart" in col].mean()
-    return df_moy
+
 
 def cal_moy_pond_ecart_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
