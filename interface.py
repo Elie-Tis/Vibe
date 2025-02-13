@@ -19,7 +19,7 @@ st.title("Analyse des notes de calculs sismiques")
 #                               Construction de la barre latéralle
 #-----------------------------------------------------------------------------------------------------------------------
 with st.sidebar:
-    st.title("Notes de calcul Advance")
+    st.title("Notes de calcul Advancessss")
     with st.expander("Dépots des notes de calcul"):
 # Récupération des fichiers drop dans la barre latérale
         ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
