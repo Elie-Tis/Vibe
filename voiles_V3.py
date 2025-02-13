@@ -125,6 +125,9 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
     return df_efforts_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
+def 
+
+#----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
   df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
   df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
@@ -132,6 +135,7 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
   return df_geo_voiles
     
 #----------------------------------------------------------------------------------------------------------------------------------------
-
-
+# On cherche à calculer les efforts dans les voiles
+def calc_ecart_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, list_cdc=["3 (CQC)", "4 (CQC)"], list_effort=[":
+    df 
 
