@@ -24,7 +24,7 @@ def nettoyer_coord_voiles(page_coord_voiles):
 # Extraction des coordoonées avec une expression régulière
     regex = re.compile(r"\((.*?)\)")
     df_description_voiles["coord"] = df_description_voiles["coord"].apply(lambda x: re.findall(regex, x))
-    df_description_voiles["n°_element"] = pd.to_numeric(df_description_voiles["n°_element"])
+    df_description_voiles["N°_element"] = pd.to_numeric(df_description_voiles["N°_element"])
 # Création d'une colonne pour chaque coordonnée
     for i in range (4):
         for j in range (3):
@@ -40,6 +40,8 @@ def nettoyer_coord_voiles(page_coord_voiles):
                                                        f"coord_p3_{i}"]
                                                       ].max(axis=1)
         df_description_voiles.drop([f"coord_p0_{i}",f"coord_p1_{i}",f"coord_p2_{i}", f"coord_p3_{i}"], axis=1, inplace=True)
+# Création d'une collonne identifiant
+        df_description_voiles["id"] = [df_description_voiles["col"] for col in ["coord_x1", "coord_x2", "coord_y1", "coord_y2", "coord_z1", "coord_z2"]
     return df_description_voiles
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -125,17 +127,20 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
     return df_efforts_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
-def 
-
+def get_efforts_voiles(df_efforts_voiles, df_coord_voiles, list_cdc=["3 (CQC)", "4 (CQC)"], list_effort=["Txy_bas", "Txy_haut"]):
+    df_efforts_voiles = pd.merge(df_efforts_voiles, df_coord_voiles, on="N°element")  # On assemble les effort et des coord en fonction du numéro élément
+    df_effort_voiles["id"] = df_effort_voiles[""]
+    return df_efforts_voiles
+    
 #----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
   df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
   df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
   df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
-  return df_geo_voiles
+  return df_geo_voiles   # Retourne un df avec les coord, et les paramètres géo, inertie, etc...
     
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
-def calc_ecart_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, list_cdc=["3 (CQC)", "4 (CQC)"], list_effort=[":
-    df 
+def calc_ecart_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, )
+    df_
 
