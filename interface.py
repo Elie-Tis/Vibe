@@ -22,9 +22,7 @@ with st.sidebar:
     st.title("Notes de calcul Advancessss")
     with st.expander("Dépots des notes de calcul"):
 # Récupération des fichiers drop dans la barre latérale
-        if st.file_uploader('Avec rupteurs', type='txt'):
-            ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
-       
+        ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
         ndc_base = st.file_uploader('Sans rupteur', type='txt')
     st.divider()
 
@@ -80,8 +78,16 @@ with st.sidebar:
 #                               Traitement des fichiers glissés dans la barre latéralle
 #-----------------------------------------------------------------------------------------------------------------------
 # Passage des éléments fichiers en éléments text
-ndc_rupteur = ndc_rupteur.getvalue().decode("utf-16")
-ndc_base = ndc_base.getvalue().decode("utf-16")
+if ndc_rupteur and ndc_base :
+    ndc_rupteur = ndc_rupteur.getvalue().decode("utf-16") 
+    ndc_base = ndc_base.getvalue().decode("utf-16")
+else:
+    ndc = open("BAT_A_BETON_ndc14.txt", "r", encoding="utf-16")
+    ndc_rupt = ndc.read()
+    ndc.close()
+    ndc = open("BAT_A_SLABE_ndc04.txt", "r", encoding="utf-16")
+    ndc_base = ndc.read()
+    ndc.close()
 # Découpage des ndc en différentes pages
 pages_rupteur = ndc.get_pages_st(ndc_rupteur, rupteur=True)
 pages_base = ndc.get_pages_st(ndc_base, rupteur=False)
