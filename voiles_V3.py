@@ -153,9 +153,8 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     for (cdc,dir) in dict_cdc_dir.items():
-        Idir = "Ix"
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
-        sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, [Idir] ].sum()  # Calcul de la somme des inerties dans la direction de la charge
+        sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, ["Ix"] ].sum()  # Calcul de la somme des inerties dans la direction de la charge
         print("sum_I= ", sum_I)
         for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
             df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, [col_ecart]] * df_ecart_efforts_voiles.loc[filtre_cdc,[Idir]] /  sum_I
