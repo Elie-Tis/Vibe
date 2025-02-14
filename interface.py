@@ -22,7 +22,9 @@ with st.sidebar:
     st.title("Notes de calcul Advancessss")
     with st.expander("Dépots des notes de calcul"):
 # Récupération des fichiers drop dans la barre latérale
-        ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
+        if st.file_uploader('Avec rupteurs', type='txt'):
+            ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
+        else
         ndc_base = st.file_uploader('Sans rupteur', type='txt')
     st.divider()
 
