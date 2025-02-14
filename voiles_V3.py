@@ -174,9 +174,9 @@ def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
 
     
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
-    df_efforts_voiles = nettoyer_efforts_voiles(page_effort_voiles)
+    df_efforts_voiles = nettoyer_efforts_voiles(page_efforts_voiles)
     df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
-    df_effort_voiles = choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
+    df_effort_voiles = choose_efforts_voiles(df_effortss_voiles, df_geo_voiles, list_cdc)
     return df_efforts_voiles
 
 
