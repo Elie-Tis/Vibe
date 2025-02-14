@@ -83,10 +83,10 @@ if ndc_rupteur and ndc_base :
     ndc_base = ndc_base.getvalue().decode("utf-16")
 else:
     ndc_ex = open("BAT_A_BETON_ndc14.txt", "r", encoding="utf-16")
-    ndc_rupt = ndc.read()
+    ndc_rupt = ndc_ex.read()
     ndc_ex.close()
     ndc_ex = open("BAT_A_SLABE_ndc08.txt", "r", encoding="utf-16")
-    ndc_base = ndc.read()
+    ndc_base = ndc_ex.read()
     ndc_ex.close()
 # Découpage des ndc en différentes pages
 pages_rupteur = ndc.get_pages_st(ndc_rupteur, rupteur=True)
