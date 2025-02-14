@@ -184,6 +184,8 @@ def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_e
     df_ecarts_efforts_voiles = calc_ecart_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort) 
     df_ecart_moy_pond = df_cal_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
     return df_ecart_moy_pond
+
+
 	
 	
 
