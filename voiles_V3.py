@@ -127,10 +127,10 @@ def nettoyer_efforts_voiles(page_efforts_voiles):
 
 #----------------------------------------------------------------------------------------------------------------------------------------
 def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
-  df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
-  df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
-  df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
-  return df_geo_voiles   # Retourne un df avec les coord, et les paramètres géo, inertie, etc...
+    df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
+    df_ep_voiles = nettoyer_epaisseur_voiles(page_epaisseurs_voiles)
+    df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
+    return df_geo_voiles   # Retourne un df avec les coord, et les paramètres géo, inertie, etc...
 
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
@@ -151,7 +151,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 
 def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
-	for (cdc,dir) in dict_cdc_dir:
+    for (cdc,dir) in dict_cdc_dir:
         I_dir = f"I{dir}"
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, f"I{dir}" ].sum()  # Calcul de la somme des inerties dans la direction de la charge
@@ -165,16 +165,15 @@ def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
     df_efforts_voiles = nettoyer_effort_voiles(page_effort_voiles)
-	df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
-	df_effort_voiles = choose_effort_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
+    df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
+    df_effort_voiles = choose_effort_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
+    return df_efforts_voiles
 
-	return df_efforts_voiles
 
-
-def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir=dict("3 (CQC)"="x", "4 (CQC)"="y" ):
-	df_ecarts_efforts_voiles = calc_ecart_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort)
-	df_ecart_moy_pond = df_cal_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
-	return df_ecart_moy_pond
+def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
+    df_ecarts_efforts_voiles = calc_ecart_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort) 
+    df_ecart_moy_pond = df_cal_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
+    return df_ecart_moy_pond
 	
 	
 
