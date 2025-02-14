@@ -345,5 +345,5 @@ st.dataframe(df_efforts_voiles_base)
 df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
 st.dataframe(df_ecart)
 
-df_fin = voiles_V3.analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"})
+df_fin = voiles_V3.analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
 st.dataframe(df_fin)
