@@ -159,7 +159,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, Idir ].sum()  # Calcul de la somme des inerties dans la direction de la charge
         for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
-            df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :].apply(lambda x: x[col_ecart] * x[Idir] / sum_I)
+            df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, [col_ecart]] * df_ecart_efforts_voiles.loc[filtre_cdc,[Idir]] /  sum_I
         df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     return df_ecart_moy_pond
 
