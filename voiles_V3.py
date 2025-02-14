@@ -155,10 +155,9 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
     for (cdc,dir) in dict_cdc_dir.items():
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, : ][f"I{dir}"].sum()  # Calcul de la somme des inerties dans la direction de la charge
-        print("sum_I= ", sum_I)
         for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
             df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :][col_ecart] * df_ecart_efforts_voiles.loc[filtre_cdc, :][f"I{dir}"] /  sum_I
-        df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Cas_de_charges"], as_index=False)[[col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]].mean()
+        df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Cas_de_charges"], as_index=False)[[col for col in  df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     # filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == "3 (CQC)"
     # sum_I = df_ecart_efforts_voiles.loc[filtre_cdc,  :]["Ix"].sum()  # Calcul de la somme des inerties dans la direction de la charge
     # df_ecart_efforts_voiles.loc[filtre_cdc, [f"{"A"}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :]["Ix"] * 1000  
