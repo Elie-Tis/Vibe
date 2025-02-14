@@ -150,7 +150,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     return df_ecart_efforts_voiles
 
 
-def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
+def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     for (cdc,dir) in dict_cdc_dir:
         I_dir = f"I{dir}"
@@ -162,17 +162,6 @@ def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     return df_ecart_moy_pond
 
 
-
-def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
-    #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
-    for (cdc,dir) in dict_cdc_dir:
-        I_dir = f"I{dir}"
-        filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
-        sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, f"I{dir}" ].sum()  # Calcul de la somme des inerties dans la direction de la charge
-        for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
-            df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :].apply(lambda x: x.col_ecart * x.Idir / sum_I)
-        df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
-    return df_ecart_moy_pond
 
     
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
@@ -183,8 +172,8 @@ def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_v
 
 
 def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
-    df_ecarts_efforts_voiles = calc_ecart_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort) 
-    df_ecart_moy_pond = df_cal_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
+    df_ecarts_efforts_voiles = calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort) 
+    df_ecart_moy_pond = calc_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
     return df_ecart_moy_pond
 
 
