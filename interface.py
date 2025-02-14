@@ -340,4 +340,5 @@ df_efforts_voiles_base = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_ba
                     list_cdc=["3 (CQC)", "4 (CQC)"])
 
 st.dataframe(df_efforts_voiles_rupt)
+st.dataframe(df_efforts_voiles_base)
 voiles_V3.analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"})
