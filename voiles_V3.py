@@ -151,7 +151,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 
 def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
-    for (cdc,dir) in dict_cdc_dir:
+	for (cdc,dir) in dict_cdc_dir:
         I_dir = f"I{dir}"
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, f"I{dir}" ].sum()  # Calcul de la somme des inerties dans la direction de la charge
@@ -159,6 +159,9 @@ def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
             df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :].apply(lambda x: x.col_ecart * x.Idir / sum_I)
         df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     return df_ecart_moy_pond
+
+
+
     
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
     df_efforts_voiles = nettoyer_effort_voiles(page_effort_voiles)
