@@ -155,11 +155,11 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     for (cdc,dir) in dict_cdc_dir.items():
-        I_dir = f"I{dir}"
+        Idir = f"I{dir}"
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
-        sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, I_dir ].sum()  # Calcul de la somme des inerties dans la direction de la charge
+        sum_I = df_ecart_efforts_voiles.loc[filtre_cdc, Idir ].sum()  # Calcul de la somme des inerties dans la direction de la charge
         for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
-            df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :].apply(lambda x: x.col_ecart * x.Idir / sum_I)
+            df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :].apply(lambda x: x[col_ecart] * x[Idir] / sum_I)
         df_ecart_moy_pond = df_ecart_efforts_voiles.goupby( by=["Cas_de_charges"], as_index=False)[[col for col in df_ecart_efforts_voiles.columns if "pond" in col]].mean()
     return df_ecart_moy_pond
 
