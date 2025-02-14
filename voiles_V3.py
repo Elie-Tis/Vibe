@@ -167,6 +167,7 @@ def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_v
     df_efforts_voiles = nettoyer_effort_voiles(page_effort_voiles)
 	df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
 	df_effort_voiles = choose_effort_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
+
 	return df_efforts_voiles
 
 
