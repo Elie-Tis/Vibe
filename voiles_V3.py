@@ -136,7 +136,7 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
 def choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc=["3 (CQC)", "4 (CQC)"] ):
-    df_efforts_voiles = pd.merge(df_efforts_voiles, df_geo_voiles, on="N°element")  # On assemble les efforts et des coord en fonction du numéro élément
+    df_efforts_voiles = pd.merge(df_efforts_voiles, df_geo_voiles, on="N°_element")  # On assemble les efforts et des coord en fonction du numéro élément
     return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), :]   # On filtre les cas de charges recherchées
     
     
