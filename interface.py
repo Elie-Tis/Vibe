@@ -338,3 +338,5 @@ df_efforts_voiles_rupt = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_ba
                     page_epaisseurs_voiles=pages_base['Epaisseurs_voiles'], 
                     page_efforts_voiles=pages_base["Torseurs_voiles"],
                     list_cdc=["3 (CQC)", "4 (CQC)"])
+
+st.dataframe(df_efforts_voiles_rupt)
