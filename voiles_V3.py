@@ -161,7 +161,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
         for col_ecart in [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]:  # Pondération de chaque colonne écart
             df_ecart_efforts_voiles.loc[filtre_cdc, [f"{col_ecart}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, [col_ecart]] * df_ecart_efforts_voiles.loc[filtre_cdc,[Idir]] /  sum_I
         
-    return df_ecart_moy_pond
+    return df_ecart_efforts_voiles
 
 
 
