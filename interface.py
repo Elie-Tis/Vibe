@@ -24,7 +24,7 @@ with st.sidebar:
 # Récupération des fichiers drop dans la barre latérale
         if st.file_uploader('Avec rupteurs', type='txt'):
             ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
-        else
+       
         ndc_base = st.file_uploader('Sans rupteur', type='txt')
     st.divider()
 
