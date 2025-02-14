@@ -25,7 +25,7 @@ def nettoyer_coord_voiles(page_coord_voiles):
     regex = re.compile(r"\((.*?)\)")
     df_description_voiles["coord"] = df_description_voiles["coord"].apply(lambda x: re.findall(regex, x))
     df_description_voiles["N°_element"] = pd.to_numeric(df_description_voiles["N°_element"])
-    print(f"DESCRIPTION VOILES,/n", df_description_voiles)
+    print(df_description_voiles)
 # Création d'une colonne pour chaque coordonnée
     for i in range (4):
         for j in range (3):
