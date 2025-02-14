@@ -162,6 +162,7 @@ def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     return df_ecart_moy_pond
 
 
+
 def cal_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     for (cdc,dir) in dict_cdc_dir:
