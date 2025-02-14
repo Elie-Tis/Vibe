@@ -41,7 +41,7 @@ def nettoyer_coord_voiles(page_coord_voiles):
         df_description_voiles.drop([f"coord_p0_{i}",f"coord_p1_{i}",f"coord_p2_{i}", f"coord_p3_{i}"], axis=1, inplace=True)
         
 # Création d'une collonne identifiant
-    df_description_voiles["id"] = df_description_voiles["coord"].apply(lambda x: "_".join(x))
+    df_description_voiles["id"] = df_description_voiles["coord"].apply(lambda x: "_".join(x)) + df_description_voiles["Cas_de_charge"] 
     return df_description_voiles
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,7 +143,7 @@ def choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc=["3 (CQC)",
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
 def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, list_effort=["Txy_bas", "Txy_haut"] ):
-    df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on="id", suffixes=("_rupt", "_base"))
+    df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on=["id", "Cas_de_charges"], suffixes=("_rupt", "_base"), )
     print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO", df_ecart_efforts_voiles)
     for effort in list_effort:
         df_ecart_efforts_voiles[f"ecart_abs_{effort}"] = df_ecart_efforts_voiles[f"{effort}_rupt"] - df_ecart_efforts_voiles[f"{effort}_base"]    # Ecart absolu (kN)
