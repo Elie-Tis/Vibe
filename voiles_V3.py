@@ -166,6 +166,7 @@ def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_v
 	df_effort_voiles = choose_effort_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
 	return df_efforts_voiles
 
+
 def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir=dict("3 (CQC)"="x", "4 (CQC)"="y" ):
 	df_ecarts_efforts_voiles = calc_ecart_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort)
 	df_ecart_moy_pond = df_cal_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
