@@ -85,7 +85,7 @@ else:
     ndc = open("BAT_A_BETON_ndc14.txt", "r", encoding="utf-16")
     ndc_rupt = ndc.read()
     ndc.close()
-    ndc = open("BAT_A_SLABE_ndc04.txt", "r", encoding="utf-16")
+    ndc = open("BAT_A_SLABE_ndc08.txt", "r", encoding="utf-16")
     ndc_base = ndc.read()
     ndc.close()
 # Découpage des ndc en différentes pages
