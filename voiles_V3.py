@@ -41,7 +41,7 @@ def nettoyer_coord_voiles(page_coord_voiles):
         df_description_voiles.drop([f"coord_p0_{i}",f"coord_p1_{i}",f"coord_p2_{i}", f"coord_p3_{i}"], axis=1, inplace=True)
         
 # Création d'une collonne identifiant
-    df_description_voiles["id"] = df_description_voiles["coord"]
+    df_description_voiles["id"] = df_description_voiles["coord"].apply(lambda x: "_".join(x))
     return df_description_voiles
 
 #------------------------------------------------------------------------------------------------------------------------------------------------------
