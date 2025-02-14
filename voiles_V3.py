@@ -163,7 +163,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
     # sum_I = df_ecart_efforts_voiles.loc[filtre_cdc,  :]["Ix"].sum()  # Calcul de la somme des inerties dans la direction de la charge
     # df_ecart_efforts_voiles.loc[filtre_cdc, [f"{"A"}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :]["Ix"] * 1000  
  
-    return df_ecart_efforts_voiles
+    return df_ecart_moy
 
 
 
