@@ -180,7 +180,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
         for etage in etages:
             filtre_etage = (filtre_cdc) & df_ecart_efforts_voiles["n°_etages"] == etage
             for col in col_ecarts:
-                df_ecart_efforts_voiles.loc[filtre_etage, f"{col}_pond"] = df_ecart_efforts_voiles.loc[filtre_etage, col] * df_ecart_efforts_voiles.loc[filtre_etage, "I_prep"] / sum_I_ser[cdc] 
+                df_ecart_efforts_voiles.loc[filtre_etage, f"{col}_pond"] = df_ecart_efforts_voiles.loc[filtre_etage, col] * df_ecart_efforts_voiles.loc[filtre_etage, "I_prep"] / sum_I_ser[cdc][etage] 
     
     df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Dir_charges", "Cas_de_charges", "n°_etages_rupt"], as_index = False)[[col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]].mean()
     print("00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",sum_I_ser)
