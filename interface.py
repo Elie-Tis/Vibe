@@ -262,7 +262,7 @@ with expander2:
 #.......................................................................
 # Méthode de vérification des efforts dans les voiles individuellement
 #.......................................................................
-with st.expender("#### *A. Vérification des voiles individuellement*"):
+with st.expander("#### *A. Vérification des voiles individuellement*"):
     if verif_voiles_indiv:
         st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
                 f"de {ecart_max_voiles * 100}%")
