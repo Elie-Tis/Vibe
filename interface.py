@@ -354,9 +354,9 @@ with st.expander("Ecarts des efforts dans les voiles intérieurs"):
 
 
 
-"df_moy"
-df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
-st.dataframe(df_fin)
+with st.expander("Moyenneè dans les voiles intérieurs"):
+    df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
+    st.dataframe(df_fin)
 
 
 
