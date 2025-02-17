@@ -71,7 +71,7 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
     df_geo_voiles.loc[:, "longueur"] = (df_geo_voiles.loc[:, 'delta_x'] ** 2 + df_geo_voiles.loc[:, 'delta_y'] ** 2) ** 0.5
 # Détermination des étages
     nb_etages = len(df_geo_voiles["coord_z1"].unique())
-    etages = [etage for etage in range(nb_etages)]
+    etages = [str(etage) for etage in range(nb_etages)]
 # Création d'un DF avec les n° d'etages et les coordonnées du plancher BAS
     df_etages = pd.DataFrame({"n°_etages": etages,
                               "coord_z1": df_geo_voiles["coord_z1"].sort_values(ascending=True).unique()
@@ -201,7 +201,7 @@ def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base
 
 
 def trace_ecart_voiles(df_efforts_voiles):
-    fig = px.scatter(df_efforts_voiles, x="n°_etages_rupt", y="ecart_Txy_haut_rel", color="Cas_de_charges", symbol="Cas_de_charges" )
+    fig = px.scatter(df_efforts_voiles, x="id", y="ecart_Txy_haut_rel", color="n°_etages_rupt", symbol="Cas_de_charges", )
 
     return fig
 	
