@@ -347,4 +347,5 @@ st.dataframe(df_ecart)
 df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
 st.dataframe(df_fin)
 
-voiles_V3.trace_ecart_voiles(df_ecart)
+fig = voiles_V3.trace_ecart_voiles(df_ecart)
+st.plotly_chart(fig)
