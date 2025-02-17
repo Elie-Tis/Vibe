@@ -160,21 +160,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
-    etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique()
-    # df_0 = pd.DataFrame()
-    # for (cdc,dir) in dict_cdc_dir.items():
-    #     filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
-    #     df = df_ecart_efforts_voiles.loc[filtre_cdc, : ].copy()
-    #     sum_I = df[f"I{dir}"].sum()  # Calcul de la somme des inerties dans la direction de la charge
-    #     for col_ecart in col_ecarts:  # Pondération de chaque colonne écart
-    #         df.loc[:, [f"{col_ecart}_pond"]] = df.loc[ : , col_ecart] * df.loc[ :, f"I{dir}"] /  sum_I
-            
-    #     df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Cas_de_charges"], as_index=False)[[col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]].mean()
-    # # filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == "3 (CQC)"
-    # # sum_I = df_ecart_efforts_voiles.loc[filtre_cdc,  :]["Ix"].sum()  # Calcul de la somme des inerties dans la direction de la charge
-    # # df_ecart_efforts_voiles.loc[filtre_cdc, [f"{"A"}_pond"]] = df_ecart_efforts_voiles.loc[filtre_cdc, :]["Ix"] * 1000  
-    # On ajoute une colonne pour la direction prépondérante de la charge
-    # Calcul de la somme des I pour chaque cas de charges
+    etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique().to_str()
     sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages_rupt"])["I_prep"].sum()
     for cdc in dict_cdc_dir.keys():
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
@@ -187,6 +173,18 @@ def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3
  
     return df_ecart_moy
 
+
+def calc_moy_pond_ecarts_voiles_bat(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
+    #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
+    col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
+    sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges"])["I_prep"].sum()
+    for cdc in dict_cdc_dir.keys():
+        filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
+        for col in col_ecarts:
+            df_ecart_efforts_voiles.loc[filtre_cdc, f"{col}_pond"] = df_ecart_efforts_voiles.loc[filtre_cdc, col] * df_ecart_efforts_voiles.loc[filtre_cdc, "I_prep"] / sum_I_ser[cdc]
+    df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Dir_charges", "Cas_de_charges"], as_index = False)[[col for col in  df_ecart_efforts_voiles.columns if "pond" in col]].sum()
+ 
+    return df_ecart_moy
 
 
     
