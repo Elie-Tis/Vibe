@@ -349,7 +349,7 @@ st.dataframe(df_fin)
 
 
 
-fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10)
+fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, title="Ecart relatif des efforts dans les voiles inétrieurs")
 fig.update_xaxes(visible=False)
 fig.update_yaxes(range=[-0.55, 1.5])
 
