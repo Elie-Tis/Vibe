@@ -359,5 +359,7 @@ with st.expander("Pondération inertielle des écarts dans les voiles intérieur
     df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
     st.dataframe(df_fin)
 
+    df = voiles_V3.calc_moy_pond_ecarts_voiles_bat(df_ecart, )
+    st.dataframe(df)
 
 
