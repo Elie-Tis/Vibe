@@ -346,7 +346,7 @@ with st.expander("Ecarts des efforts dans les voiles intérieurs"):
     df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
     st.dataframe(df_ecart)
     fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
-                     title="Ecart relatif des efforts dans les voiles inétrieurs", size="I_prep")
+                     title="Ecart relatif des efforts dans les voiles inétrieurs", )
     fig.update_xaxes(visible=False,)
     fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
     st.plotly_chart(fig)
