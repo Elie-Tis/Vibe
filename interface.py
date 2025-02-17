@@ -304,7 +304,7 @@ with st.expender("#### *A. Vérification des voiles individuellement*"):
 # Méthode de vérification des efforts dans les voiles avec torseurs par étages
 #............................................................................
 # Affichage retractable pour les résultats de la méthode
-with st.markdown("#### *C. Vérification des torseurs par étage*"):
+with st.expander("#### *C. Vérification des torseurs par étage*"):
 # Affichage de l'état de vérification des écarts d'efforts
     if verif_voile_int_etage:
         st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
