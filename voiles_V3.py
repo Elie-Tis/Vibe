@@ -202,6 +202,7 @@ def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base
 
 def trace_ecart_voiles(df_efforts_voiles):
     fig = px.scatter(df_efforts_voiles, x="id", y="ecart_Txy_haut_rel", color="n°_etages_rupt", symbol="Cas_de_charges", )
+    fig.update_x_axes(visible=False)
 
     return fig
 	
