@@ -204,7 +204,7 @@ def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base
 
 
 def trace_ecart_voiles(df_efforts_voiles):
-    plotly
+    px.
 	
 
 	
