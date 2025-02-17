@@ -5,6 +5,7 @@ from numpy import nan, sin, cos, arctan
 import pandas as pd
 import re
 import functools
+import plotly.express as px
 
 # On cherche à rassembler tous les informations sur les voiles : n°, coord, epaisseur, longueur, inertie, etc
 
@@ -202,7 +203,8 @@ def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base
     return df_ecart_moy_pond
 
 
-	
+def trace_ecart_voiles(df_efforts_voiles):
+    plotly
 	
 
 	

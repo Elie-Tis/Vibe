@@ -6,6 +6,7 @@ import streamlit as st
 import pandas as pd
 import geo_hypo
 import voiles_V2, voiles_V3
+import plotly.express as px
 
 ########################################################################################################################
 #                                         Page et la barre latéralle
