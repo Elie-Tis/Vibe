@@ -153,7 +153,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
-    etages = [etage for etage in  range(0, len(df_ecart_efforts_voiles["n°_etages_rupt"].unique()))]
+    etages = [etage for etage in  range(0, 4)]
     # df_0 = pd.DataFrame()
     # for (cdc,dir) in dict_cdc_dir.items():
     #     filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
