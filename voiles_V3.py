@@ -156,7 +156,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     return df_ecart_efforts_voiles
 
 
-def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
+def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
     etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique()
@@ -196,9 +196,9 @@ def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_v
     return df_efforts_voiles_compl
 
 
-def analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
+def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
     df_ecarts_efforts_voiles = calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort) 
-    df_ecart_moy_pond = calc_moy_pond_ecarts_voiles(df_ecarts_efforts_voiles, dict_cdc_dir)
+    df_ecart_moy_pond = calc_moy_pond_ecarts_voiles_etages(df_ecarts_efforts_voiles, dict_cdc_dir)
     return df_ecart_moy_pond
 
 
