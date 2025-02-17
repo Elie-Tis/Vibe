@@ -242,9 +242,6 @@ verif_voile_int_etage, df_voiles_int_defect_etages, df_voiles_int_glob_etages = 
 )
 # Sous titre
 
-
-
-
 def color_voil(val, limite):
     color ='#3e2327' if float(val)>limite else '#173928'
     return f'background-color: {color}'
@@ -265,25 +262,25 @@ with expander2:
 #.......................................................................
 # Méthode de vérification des efforts dans les voiles individuellement
 #.......................................................................
-st.markdown("#### *A. Vérification des voiles individuellement*")
-if verif_voiles_indiv:
-    st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
-               f"de {ecart_max_voiles * 100}%")
-else:
-    st.warning(f"Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
-               f"({ecart_max_voiles * 100}%)")
-col_print = ["n°_element_r", "cas_de_charges_r", "txy_haut_r", "txy_haut_b", "ecart_txy_haut", "txy_bas_r", "txy_bas_b",
-             "ecart_txy_bas"]
-# Affichage de l'état de la vérification des coordonnées
-st.dataframe(df_voiles_defect.loc[:, col_print].style.format(precision=3).map(
-func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
-                 use_container_width=True)
+with st.expender("#### *A. Vérification des voiles individuellement*"):
+    if verif_voiles_indiv:
+        st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
+                f"de {ecart_max_voiles * 100}%")
+    else:
+        st.warning(f"Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
+                f"({ecart_max_voiles * 100}%)")
+    col_print = ["n°_element_r", "cas_de_charges_r", "txy_haut_r", "txy_haut_b", "ecart_txy_haut", "txy_bas_r", "txy_bas_b",
+                "ecart_txy_bas"]
+    # Affichage de l'état de la vérification des coordonnées
+    st.dataframe(df_voiles_defect.loc[:, col_print].style.format(precision=3).map(
+    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
+                    use_container_width=True)
 
-choix_ecarts = st.toggle("Voir la liste complète des voiles")
-if choix_ecarts:
-    st.dataframe(df_ecarts_efforts_voiles.loc[:, col_print].style.format(precision=3).map(
-            func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
-                         use_container_width=True)
+    choix_ecarts = st.toggle("Voir la liste complète des voiles")
+    if choix_ecarts:
+        st.dataframe(df_ecarts_efforts_voiles.loc[:, col_print].style.format(precision=3).map(
+                func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
+                            use_container_width=True)
 #............................................................................
 # Méthode de vérification des efforts dans les voiles pondérés par l'inertie
 #............................................................................
@@ -307,18 +304,18 @@ if choix_ecarts:
 # Méthode de vérification des efforts dans les voiles avec torseurs par étages
 #............................................................................
 # Affichage retractable pour les résultats de la méthode
-st.markdown("#### *C. Vérification des torseurs par étage*")
+with st.markdown("#### *C. Vérification des torseurs par étage*"):
 # Affichage de l'état de vérification des écarts d'efforts
-if verif_voile_int_etage:
-    st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
-               f"de {ecart_max_voiles*100}%")
-else:
-    st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
-               f"({ecart_max_voiles*100}%)")
+    if verif_voile_int_etage:
+        st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
+                f"de {ecart_max_voiles*100}%")
+    else:
+        st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
+                f"({ecart_max_voiles*100}%)")
 
-st.dataframe(df_voiles_int_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX", "Ecart_TY"]),
-             hide_index=True,
-             use_container_width=True)
+    st.dataframe(df_voiles_int_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX", "Ecart_TY"]),
+                hide_index=True,
+                use_container_width=True)
 
 st.divider()
 
