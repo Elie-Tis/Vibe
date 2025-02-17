@@ -336,21 +336,27 @@ df_efforts_voiles_base = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_ba
                     page_epaisseurs_voiles=pages_base['Epaisseurs_voiles'], 
                     page_efforts_voiles=pages_base["Torseurs_voiles"],
                     list_cdc=["3 (CQC)", "4 (CQC)"])
-"df_efforts_voiles_rupt"
-st.dataframe(df_efforts_voiles_rupt)
-"df_efforts_voiles_base"
-st.dataframe(df_efforts_voiles_base)
-"df_ecart"
-df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
-st.dataframe(df_ecart)
+
+with st.expander("Effort dans les voiles intérieurs"):
+    "df_efforts_voiles_rupt"
+    st.dataframe(df_efforts_voiles_rupt)
+    "df_efforts_voiles_base"
+    st.dataframe(df_efforts_voiles_base)
+with st.expander("Ecarts des efforts dans les voiles intérieurs"):
+    df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
+    st.dataframe(df_ecart)
+    fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, title="Ecart relatif des efforts dans les voiles inétrieurs")
+    fig.update_xaxes(visible=False)
+    fig.update_yaxes(range=[-0.55, 1.5])
+    st.plotly_chart(fig)
+
+
+
+
+
 "df_moy"
 df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
 st.dataframe(df_fin)
 
 
 
-fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, title="Ecart relatif des efforts dans les voiles inétrieurs")
-fig.update_xaxes(visible=False)
-fig.update_yaxes(range=[-0.55, 1.5])
-
-st.plotly_chart(fig)
