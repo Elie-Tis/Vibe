@@ -171,8 +171,8 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
     # On notte la valeur du I prépondérant en fonction de la direction de la charge
     filtre_cdc_x = df_ecart_efforts_voiles["Dir_charges"] == "x"
     filtre_cdc_y = df_ecart_efforts_voiles["Dir_charges"] == "y"
-    df_ecart_efforts_voiles.loc[filtre_cdc_x, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_x, "Ix"]
-    df_ecart_efforts_voiles.loc[filtre_cdc_y, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_y, "Iy"]
+    df_ecart_efforts_voiles.loc[filtre_cdc_x, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_x, "Iy"]
+    df_ecart_efforts_voiles.loc[filtre_cdc_y, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_y, "Ix"]
     # Calcul de la somme des I pour chaque cas de charges
     sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages_rupt"])["I_prep"].sum()
     for cdc in dict_cdc_dir.keys():
