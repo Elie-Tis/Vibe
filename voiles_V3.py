@@ -160,7 +160,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
 def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
-    etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique().to_str()
+    etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique()
     sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages_rupt"])["I_prep"].sum()
     for cdc in dict_cdc_dir.keys():
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
@@ -202,7 +202,7 @@ def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base
 
 
 def trace_ecart_voiles(df_efforts_voiles):
-    fig = px.scatter(df_efforts_voiles, x="id", y="ecart_Txy_haut_rel", color="n°_etages_rupt", symbol="Cas_de_charges" )
+    fig = px.scatter(df_efforts_voiles, x="n°_etages_rupt", y="ecart_Txy_haut_rel", color="Cas_de_charges", symbol="Cas_de_charges" )
 
     return fig
 	
