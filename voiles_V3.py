@@ -180,7 +180,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
             df_ecart_efforts_voiles[filtre_cdc, f"{col}_pond"] = df_ecart_efforts_voiles[filtre_cdc, col] * df_ecart_efforts_voiles[filtre_cdc, "I"] / sum_I_ser["cdc"]
     
 
-
+    print("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
 
  
     return df_ecart_efforts_voiles
