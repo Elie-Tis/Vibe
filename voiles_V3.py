@@ -174,7 +174,7 @@ def calc_moy_pond_ecarts_voiles(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)"
     df_ecart_efforts_voiles.loc[filtre_cdc_x, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_x, "Ix"]
     df_ecart_efforts_voiles.loc[filtre_cdc_y, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_y, "Iy"]
     # Calcul de la somme des I pour chaque cas de charges
-    sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages"])["I_prep"].sum()
+    sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages_rupt"])["I_prep"].sum()
     for cdc in dict_cdc_dir.keys():
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         for etage in etages:
