@@ -338,12 +338,13 @@ df_efforts_voiles_base = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_ba
                     page_epaisseurs_voiles=pages_base['Epaisseurs_voiles'], 
                     page_efforts_voiles=pages_base["Torseurs_voiles"],
                     list_cdc=["3 (CQC)", "4 (CQC)"])
-
+"df_efforts_voiles_rupt"
 st.dataframe(df_efforts_voiles_rupt)
+"df_efforts_voiles_base"
 st.dataframe(df_efforts_voiles_base)
-
+"df_ecart"
 df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
 st.dataframe(df_ecart)
-
+"df_moy"
 df_fin = voiles_V3.analyse_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
 st.dataframe(df_fin)
