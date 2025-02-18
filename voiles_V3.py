@@ -157,22 +157,22 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     # Col à afficher
     df_ecart_efforts_voiles["n°_etages_rupt"] = df_ecart_efforts_voiles["n°_etage"]
     col_ecart = [col for col in df_ecart_efforts_voiles.columns if "ecart" in col]
-    col = ["N°_element_rupt", "N°_element_base", "n°_etage", "Cas_de_charges", "Ix", "Iy"] + list_effort + col_ecart 
+    col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Ix", "Iy"] + list_effort + col_ecart 
     return df_ecart_efforts_voiles[col]
 
 
 def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
     #dict_cdc_dir est un dictionnaire qui indique la direction prédominante de chaque cas de charge choisi  {"3 (CQC)": "x",  "Fx + 0.3Fy": "x", "Fy + 0.3Fx": "y"
     col_ecarts = [col for col in  df_ecart_efforts_voiles.columns if "ecart" in col]
-    etages = df_ecart_efforts_voiles["n°_etages_rupt"].unique()
-    sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages_rupt"])["I_prep"].sum()
+    etages = df_ecart_efforts_voiles["n°_etages"].unique()
+    sum_I_ser = df_ecart_efforts_voiles.groupby(["Cas_de_charges", "n°_etages"])["I_prep"].sum()
     for cdc in dict_cdc_dir.keys():
         filtre_cdc = df_ecart_efforts_voiles["Cas_de_charges"] == cdc
         for etage in etages:
-            filtre_etage = (filtre_cdc) & (df_ecart_efforts_voiles["n°_etages_rupt"] == etage)
+            filtre_etage = (filtre_cdc) & (df_ecart_efforts_voiles["n°_etages"] == etage)
             for col in col_ecarts:
                 df_ecart_efforts_voiles.loc[filtre_etage, f"{col}_pond"] = df_ecart_efforts_voiles.loc[filtre_etage, col] * df_ecart_efforts_voiles.loc[filtre_etage, "I_prep"] / sum_I_ser[cdc][etage] 
-    df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Dir_charges", "Cas_de_charges", "n°_etages_rupt"], as_index = False)[[col for col in  df_ecart_efforts_voiles.columns if "pond" in col]].sum()
+    df_ecart_moy = df_ecart_efforts_voiles.groupby(by=["Dir_charges", "Cas_de_charges", "n°_etages"], as_index = False)[[col for col in  df_ecart_efforts_voiles.columns if "pond" in col]].sum()
  
     return df_ecart_moy
 
