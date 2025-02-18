@@ -155,7 +155,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     df_ecart_efforts_voiles.loc[filtre_cdc_x, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_x, "Iy"]
     df_ecart_efforts_voiles.loc[filtre_cdc_y, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_y, "Ix"]
     # Col à afficher
-    df_ecart_efforts_voiles["n°_etages_rupt"] = df_ecart_efforts_voiles["n°_etage"]
+    df_ecart_efforts_voiles["n°_etages"] = df_ecart_efforts_voiles["n°_etages_rupt"]
     col_ecart = [col for col in df_ecart_efforts_voiles.columns if "ecart" in col]
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
     col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Ix", "Iy"] + list_effort_glob + col_ecart 
