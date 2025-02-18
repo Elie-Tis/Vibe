@@ -159,7 +159,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     col_ecart = [col for col in df_ecart_efforts_voiles.columns if "ecart" in col]
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
     col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Ix", "Iy"] + list_effort_glob + col_ecart 
-    return df_ecart_efforts_voiles
+    return df_ecart_efforts_voiles[col]
 
 
 def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
