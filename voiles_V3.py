@@ -144,7 +144,7 @@ def choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc=["3 (CQC)",
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On cherche à calculer les efforts dans les voiles
 def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
-    df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on=["id", "Cas_de_charges", "Ix", "Iy"], suffixes=("_rupt", "_base"), )
+    df_ecart_efforts_voiles = pd.merge(df_efforts_voiles_rupt, df_efforts_voiles_base, on=["id", "Cas_de_charges", "Ix", "Iy"]+list_effort, suffixes=("_rupt", "_base"), )
     for effort in list_effort:
         df_ecart_efforts_voiles[f"ecart_{effort}_abs"] = df_ecart_efforts_voiles[f"{effort}_rupt"] - df_ecart_efforts_voiles[f"{effort}_base"]    # Ecart absolu (kN)
         df_ecart_efforts_voiles[f"ecart_{effort}_rel"] = df_ecart_efforts_voiles[f"{effort}_rupt"] / df_ecart_efforts_voiles[f"{effort}_base"] - 1  # Ecart relatif (%)
@@ -154,7 +154,11 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     filtre_cdc_y = df_ecart_efforts_voiles["Dir_charges"] == "y"
     df_ecart_efforts_voiles.loc[filtre_cdc_x, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_x, "Iy"]
     df_ecart_efforts_voiles.loc[filtre_cdc_y, "I_prep"] = df_ecart_efforts_voiles.loc[filtre_cdc_y, "Ix"]
-    return df_ecart_efforts_voiles
+    # Col à afficher
+    df_ecart_efforts_voiles["n°_etages_rupt"] = df_ecart_efforts_voiles["n°_etage"]
+    col_ecart = [col for col in df_ecart_efforts_voiles.columns if "ecart" in col]
+    col = ["N°_element_rupt", "N°_element_base", "n°_etage", "Cas_de_charges", "Ix", "Iy"] + list_effort + col_ecart 
+    return df_ecart_efforts_voiles[col]
 
 
 def calc_moy_pond_ecarts_voiles_etages(df_ecart_efforts_voiles, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"} ):
