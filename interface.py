@@ -385,7 +385,7 @@ with st.expander("Ecart dans les voiles version thèse"):
     st.subheader("Etude par étage")
 
     col_m_these_x, col_m_these_y = st.columns(2)
-
+    
     fig_x = px.box(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs", )
     fig_x.update_xaxes(showgrid=True ,dtick=0.1)

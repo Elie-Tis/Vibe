@@ -93,6 +93,7 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
                           df_geo_voiles["Iy_loc"] - df_geo_voiles["Ix_loc"]) / 2 * cos(
                           2 * df_geo_voiles["teta_rad"]) + df_geo_voiles["Ixy_loc"] * sin(
                           2 * df_geo_voiles["teta_rad"])
+    print("ETAGEEEEEE!!!!!!!!!!!!", df_etages)
     return df_geo_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
@@ -132,6 +133,7 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
     df_coord_voiles = nettoyer_coord_voiles(page_coord_voiles)
     df_ep_voiles = nettoyer_epaisseurs_voiles(page_epaisseurs_voiles)
     df_geo_voiles = calcul_geometrie_voiles(df_coord_voiles, df_ep_voiles)
+    
     return df_geo_voiles   # Retourne un df avec les coord, et les paramètres géo, inertie, etc...
 
 #----------------------------------------------------------------------------------------------------------------------------------------
@@ -200,6 +202,7 @@ def get_ecarts_voiles_orient(df_ecart_effort, list_effort=["Txy_bas", "Txy_haut"
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
     col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep", "teta_rad_rupt"] + list_effort_glob + col_ecart
     col.append("id")
+    
 
     return df.loc[(filtre_dir_x) | (filtre_dir_y), col].reset_index(drop=True)
 
