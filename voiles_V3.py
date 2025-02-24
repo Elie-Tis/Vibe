@@ -93,7 +93,7 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
                           df_geo_voiles["Iy_loc"] - df_geo_voiles["Ix_loc"]) / 2 * cos(
                           2 * df_geo_voiles["teta_rad"]) + df_geo_voiles["Ixy_loc"] * sin(
                           2 * df_geo_voiles["teta_rad"])
-    print("ETAGEEEEEE!!!!!!!!!!!!", df_etages)
+  
     return df_geo_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
@@ -162,6 +162,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
     col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep", "teta_rad_rupt"] + list_effort_glob + col_ecart
     col.append("id")
+    print("ETAAAAGGGGGEEEE !!!!!", df_ecart_efforts_voiles["n°_etages"].unique())
     return df_ecart_efforts_voiles[col]
 
 
@@ -196,6 +197,7 @@ def calc_moy_pond_ecarts_voiles_bat(df_ecart_efforts_voiles, dict_cdc_dir={"3 (C
 def get_ecarts_voiles_orient(df_ecart_effort, list_effort=["Txy_bas", "Txy_haut"]):
     # On ne conserve que les voiles orientés dans le sens des cas de charges
     df = df_ecart_effort.copy()
+    
     filtre_dir_x = (df["Dir_charges"] == "x") & (df["teta_rad_rupt"] == 0)
     filtre_dir_y = (df["Dir_charges"] == "y") & (df["teta_rad_rupt"] != 0)
     col_ecart = [col for col in df.columns if "ecart" in col if "pond" not in col]
@@ -214,7 +216,9 @@ def get_ecarts_voiles_orient(df_ecart_effort, list_effort=["Txy_bas", "Txy_haut"
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
     df_efforts_voiles = nettoyer_efforts_voiles(page_efforts_voiles)
     df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
+    print(df_geo_voiles["n°_etages"].unique())
     df_efforts_voiles_compl = choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
+    
     return df_efforts_voiles_compl
 
 
