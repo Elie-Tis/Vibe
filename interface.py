@@ -358,9 +358,16 @@ with st.expander("Ecarts des efforts dans les voiles intérieurs"):
 with st.expander("Pondération inertielle des écarts dans les voiles intérieurs"):
     st.subheader("Moyenne par étage")
     df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
-    st.dataframe(df_fin)
+    st.dataframe(df_fin.style.format(precision=3).map(
+    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                    use_container_width=True)
     st.subheader("Moyenne dans le bâtiment")
     df = voiles_V3.calc_moy_pond_ecarts_voiles_bat(df_ecart, )
-    st.dataframe(df)
+    st.dataframe(df.style.format(precision=3).map(
+    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                    use_container_width=True)
 
 
+with st.expander("Pondération inertielle des écarts dans les voiles intérieurs (version thèse)"):
+    st.subheader("Moyenne par étage")
+    st.subheader("Moyenne dans le bâtiment")
