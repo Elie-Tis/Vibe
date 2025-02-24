@@ -83,10 +83,10 @@ if ndc_rupteur and ndc_base :
     ndc_rupteur = ndc_rupteur.getvalue().decode("utf-16") 
     ndc_base = ndc_base.getvalue().decode("utf-16")
 else:
-    ndc_ex = open("BAT_A_SLABE_ndc08.txt", "r", encoding="utf-16")
+    ndc_ex = open("BAT_B_SLABE_ZZs_ndc02.txt", "r", encoding="utf-16")
     ndc_rupteur = ndc_ex.read()
     ndc_ex.close()
-    ndc_ex = open("BAT_A_BETON_ndc15.txt", "r", encoding="utf-16")
+    ndc_ex = open("BAT_B_BETON_ndc03.txt", "r", encoding="utf-16")
     ndc_base = ndc_ex.read()
     ndc_ex.close()
 # Découpage des ndc en différentes pages
@@ -357,7 +357,7 @@ with st.expander("Ecarts des efforts dans les voiles intérieurs"):
 
 with st.expander("Pondération inertielle des écarts dans les voiles intérieurs"):
     st.subheader("Moyenne par étage")
-    df_fin = voiles_V3.analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
+    df_fin = voiles_V3.analyse_efforts_voiles_pond_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
     st.dataframe(df_fin.style.format(precision=3).map(
     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
                     use_container_width=True)
@@ -368,6 +368,51 @@ with st.expander("Pondération inertielle des écarts dans les voiles intérieur
                     use_container_width=True)
 
 
-with st.expander("Pondération inertielle des écarts dans les voiles intérieurs (version thèse)"):
-    st.subheader("Moyenne par étage")
+with st.expander("Ecart dans les voiles version thèse"):
+    st.text("On ne conserve que les voiles orientés dans la direction des cas de charges")
+    st.subheader("Voiles individuels")
+    df2 = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
+
+    st.dataframe(df2.style.format(precision=3).map(
+    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
+                    use_container_width=True)
+    fig = px.scatter(df2, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+                     title="Ecart relatif des efforts dans les voiles intérieurs", )
+    fig.update_xaxes(visible=False,)
+    fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
+    st.plotly_chart(fig)
+
+    st.subheader("Etude par étage")
+
+    col_m_these_x, col_m_these_y = st.columns(2)
+
+    fig_x = px.box(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+                   title="Répartition des écarts relatifs", )
+    fig_x.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_x.update_yaxes(showgrid=True ,dtick=1)
+    fig_x.update_traces(boxmean=True)
+    fig_x.update_layout(height=800)
+    col_m_these_x.plotly_chart(fig_x)
+
+    fig_x_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges", size="I_prep",
+                   title="Taille du point représente l'inertie")
+    fig_x_I.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_x_I.update_yaxes(showgrid=True ,dtick=1.0)
+    fig_x_I.update_layout(height=800)
+    col_m_these_x.plotly_chart(fig_x_I)
+
+    fig_y = px.box(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+                   title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
+    fig_y.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_x.update_yaxes(showgrid=False ,dtick=1)
+    fig_y.update_traces(boxmean=True)
+    fig_y.update_layout(height=800)
+    col_m_these_y.plotly_chart(fig_y)
+
+    fig_y_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges",
+                   title="Taille du point représente l'inertie", color_discrete_sequence=px.colors.qualitative.G10, size="I_prep")
+    fig_y_I.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_y_I.update_yaxes(showgrid=True ,dtick=1.0)
+    fig_y_I.update_layout(height=800)
+    col_m_these_y.plotly_chart(fig_y_I)
     st.subheader("Moyenne dans le bâtiment")

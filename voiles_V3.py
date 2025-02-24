@@ -1,7 +1,7 @@
  # Lorsque les voiles ne sont pas numérotés de la même manière entre le modèle avec et sans rupteurs, la comparaison des efforts dans les voiles de manière individuelle ne peux plus se baser sur les numéros d'éléments.
 # Il faut donc se rabattre sur l"utilisation des coordonées des voiles. Important de noter que cette méthode ne fonctionne pas dans le cas de modèles avec des refends désolidarisés de la façade !!!!
 
-from numpy import nan, sin, cos, arctan
+from numpy import nan, sin, cos, arctan, pi 
 import pandas as pd
 import re
 import functools
@@ -158,7 +158,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     df_ecart_efforts_voiles["n°_etages"] = df_ecart_efforts_voiles["n°_etages_rupt"]
     col_ecart = [col for col in df_ecart_efforts_voiles.columns if "ecart" in col]
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
-    col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep"] + list_effort_glob + col_ecart
+    col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep", "teta_rad_rupt"] + list_effort_glob + col_ecart
     col.append("id")
     return df_ecart_efforts_voiles[col]
 
@@ -191,7 +191,22 @@ def calc_moy_pond_ecarts_voiles_bat(df_ecart_efforts_voiles, dict_cdc_dir={"3 (C
  
     return df_ecart_moy
 
+def get_ecarts_voiles_orient(df_ecart_effort, list_effort=["Txy_bas", "Txy_haut"]):
+    # On ne conserve que les voiles orientés dans le sens des cas de charges
+    df = df_ecart_effort.copy()
+    filtre_dir_x = (df["Dir_charges"] == "x") & (df["teta_rad_rupt"] == 0)
+    filtre_dir_y = (df["Dir_charges"] == "y") & (df["teta_rad_rupt"] != 0)
+    col_ecart = [col for col in df.columns if "ecart" in col if "pond" not in col]
+    list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
+    col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep", "teta_rad_rupt"] + list_effort_glob + col_ecart
+    col.append("id")
 
+    return df.loc[(filtre_dir_x) | (filtre_dir_y), col].reset_index(drop=True)
+
+
+
+
+ 
     
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
     df_efforts_voiles = nettoyer_efforts_voiles(page_efforts_voiles)
@@ -200,7 +215,7 @@ def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_v
     return df_efforts_voiles_compl
 
 
-def analyse_efforts_voiles_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
+def analyse_efforts_voiles_pond_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"], dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}):
     df_ecarts_efforts_voiles = calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort, dict_cdc_dir={"3 (CQC)":"x", "4 (CQC)":"y"}) 
     df_ecart_moy_pond = calc_moy_pond_ecarts_voiles_etages(df_ecarts_efforts_voiles, dict_cdc_dir)
     return df_ecart_moy_pond
