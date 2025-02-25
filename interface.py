@@ -388,30 +388,30 @@ with st.expander("Ecart dans les voiles version thèse"):
     
     fig_x = px.box(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs", )
-    fig_x.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_x.update_xaxes(showgrid=True ,dtick=0.05)
     fig_x.update_yaxes(showgrid=True ,dtick=1)
     fig_x.update_traces(boxmean=True)
     fig_x.update_layout(height=800)
     col_m_these_x.plotly_chart(fig_x)
 
     fig_x_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges", size="I_prep",
-                   title="Taille du point représente l'inertie")
-    fig_x_I.update_xaxes(showgrid=True ,dtick=0.1)
+                   title="Taille du point représente l'inertie",)
+    fig_x_I.update_xaxes(showgrid=True ,dtick=0.05)
     fig_x_I.update_yaxes(showgrid=True ,dtick=1.0)
     fig_x_I.update_layout(height=800)
-    col_m_these_x.plotly_chart(fig_x_I)
+    col_m_these_x.plotly_chart(fig_x_I,  theme="streamlit")
 
     fig_y = px.box(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
-    fig_y.update_xaxes(showgrid=True ,dtick=0.1)
-    fig_x.update_yaxes(showgrid=False ,dtick=1)
+    fig_y.update_xaxes(showgrid=True ,dtick=0.05)
+    fig_x.update_yaxes(showgrid=True ,dtick=1)
     fig_y.update_traces(boxmean=True)
     fig_y.update_layout(height=800)
     col_m_these_y.plotly_chart(fig_y)
 
     fig_y_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges",
                    title="Taille du point représente l'inertie", color_discrete_sequence=px.colors.qualitative.G10, size="I_prep")
-    fig_y_I.update_xaxes(showgrid=True ,dtick=0.1)
+    fig_y_I.update_xaxes(showgrid=True ,dtick=0.05)
     fig_y_I.update_yaxes(showgrid=True ,dtick=1.0)
     fig_y_I.update_layout(height=800)
     col_m_these_y.plotly_chart(fig_y_I)

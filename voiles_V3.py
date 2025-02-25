@@ -71,15 +71,20 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
     df_geo_voiles.loc[:, "longueur"] = (df_geo_voiles.loc[:, 'delta_x'] ** 2 + df_geo_voiles.loc[:, 'delta_y'] ** 2) ** 0.5
 # Détermination des étages
     nb_etages = len(df_geo_voiles["coord_z1"].unique())
-    etages = [str(etage) for etage in range(nb_etages)]
+    etages = [etage for etage in range(nb_etages)]
+    
 # Création d'un DF avec les n° d'etages et les coordonnées du plancher BAS
     df_etages = pd.DataFrame({"n°_etages": etages,
                               "coord_z1": df_geo_voiles["coord_z1"].sort_values(ascending=True).unique()
                               })
+    # print("ETAAAAGGGGGEEEE !!!!!", df_geo_voiles["coord_z1"].sort_values(ascending=True).unique())
 # On implémentes les étages dans le DF principal
-    df_geo_voiles = df_geo_voiles.merge(df_etages, how='outer', on='coord_z1')
+    df_geo_voiles = df_geo_voiles.merge(df_etages, how='left', on='coord_z1')
+    print("GEO ETAGE    !!!!!", df_geo_voiles["coord_z1"].sort_values(ascending=True).unique())
 # On ajoute les epaisseurs dans le DF principal
-    df_geo_voiles = pd.merge(df_geo_voiles, df_epaisseurs_voiles, how='outer', on='N°_element')
+    df_geo_voiles = pd.merge(df_geo_voiles, df_epaisseurs_voiles, how='inner', on='N°_element')
+    print("GEO ETAGE EP !!!!!", df_geo_voiles["coord_z1"].sort_values(ascending=True).unique())
+    
 # Calcul des moments quadratiques locaux, X_local suit la direction du voile, Y_local correspond à l'épaisseur
     df_geo_voiles.loc[:, "Ix_loc"] = (df_geo_voiles.loc[:, "longueur"] * df_geo_voiles.loc[:, "epaisseur"] ** 3) / 12
     df_geo_voiles.loc[:, "Iy_loc"] = (df_geo_voiles.loc[:, "epaisseur"] * df_geo_voiles.loc[:, "longueur"] ** 3) / 12
@@ -93,7 +98,7 @@ def calcul_geometrie_voiles(df_description_voiles, df_epaisseurs_voiles):
                           df_geo_voiles["Iy_loc"] - df_geo_voiles["Ix_loc"]) / 2 * cos(
                           2 * df_geo_voiles["teta_rad"]) + df_geo_voiles["Ixy_loc"] * sin(
                           2 * df_geo_voiles["teta_rad"])
-  
+    
     return df_geo_voiles
 
 #----------------------------------------------------------------------------------------------------------------------------------------
@@ -139,7 +144,8 @@ def get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles):
 #----------------------------------------------------------------------------------------------------------------------------------------
 # On filtre les cas de charges intéressants et on regroupe efforts et coordonnées
 def choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc=["3 (CQC)", "4 (CQC)"] ):
-    df_efforts_voiles = pd.merge(df_efforts_voiles, df_geo_voiles, on="N°_element")  # On assemble les efforts et des coord en fonction du numéro élément
+    df_efforts_voiles = pd.merge(df_efforts_voiles, df_geo_voiles, on="N°_element", how="inner")  # On assemble les efforts et des coord en fonction du numéro élément
+   
     return df_efforts_voiles.loc[df_efforts_voiles["Cas_de_charges"].isin(list_cdc), :]   # On filtre les cas de charges recherchées
     
     
@@ -162,7 +168,7 @@ def calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base, l
     list_effort_glob = [f"{effort}_{suffix}" for effort in list_effort for suffix in ["rupt", "base"]]
     col = ["N°_element_rupt", "N°_element_base", "n°_etages", "Cas_de_charges", "Dir_charges","Ix", "Iy", "I_prep", "teta_rad_rupt"] + list_effort_glob + col_ecart
     col.append("id")
-    print("ETAAAAGGGGGEEEE !!!!!", df_ecart_efforts_voiles["n°_etages"].unique())
+    
     return df_ecart_efforts_voiles[col]
 
 
@@ -216,9 +222,8 @@ def get_ecarts_voiles_orient(df_ecart_effort, list_effort=["Txy_bas", "Txy_haut"
 def get_efforts_voiles(page_coord_voiles, page_epaisseurs_voiles, page_efforts_voiles, list_cdc=["3 (CQC)", "4 (CQC)"]):
     df_efforts_voiles = nettoyer_efforts_voiles(page_efforts_voiles)
     df_geo_voiles = get_geo_voiles(page_coord_voiles, page_epaisseurs_voiles)
-    print(df_geo_voiles["n°_etages"].unique())
     df_efforts_voiles_compl = choose_efforts_voiles(df_efforts_voiles, df_geo_voiles, list_cdc)
-    
+   
     return df_efforts_voiles_compl
 
 
