@@ -83,10 +83,10 @@ if ndc_rupteur and ndc_base :
     ndc_rupteur = ndc_rupteur.getvalue().decode("utf-16") 
     ndc_base = ndc_base.getvalue().decode("utf-16")
 else:
-    ndc_ex = open("BAT_B_SLABE_ZZs_ndc02.txt", "r", encoding="utf-16")
+    ndc_ex = open("BAT_B_SLABE_ZZs_ndc03.txt", "r", encoding="utf-16")
     ndc_rupteur = ndc_ex.read()
     ndc_ex.close()
-    ndc_ex = open("BAT_B_BETON_ndc03.txt", "r", encoding="utf-16")
+    ndc_ex = open("BAT_B_BETON_ndc04.txt", "r", encoding="utf-16")
     ndc_base = ndc_ex.read()
     ndc_ex.close()
 # Découpage des ndc en différentes pages
@@ -389,7 +389,7 @@ with st.expander("Ecart dans les voiles version thèse"):
     fig_x = px.box(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs", )
     fig_x.update_xaxes(showgrid=True ,dtick=0.05)
-    fig_x.update_yaxes(showgrid=True ,dtick=1)
+    fig_x.update_yaxes(showgrid=True ,dtick=1.)
     fig_x.update_traces(boxmean=True)
     fig_x.update_layout(height=800)
     col_m_these_x.plotly_chart(fig_x)
@@ -404,7 +404,7 @@ with st.expander("Ecart dans les voiles version thèse"):
     fig_y = px.box(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
     fig_y.update_xaxes(showgrid=True ,dtick=0.05)
-    fig_x.update_yaxes(showgrid=True ,dtick=1)
+    fig_x.update_yaxes(showgrid=True ,dtick=1.)
     fig_y.update_traces(boxmean=True)
     fig_y.update_layout(height=800)
     col_m_these_y.plotly_chart(fig_y)
