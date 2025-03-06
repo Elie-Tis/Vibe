@@ -368,15 +368,15 @@ with st.expander("Pondération inertielle des écarts dans les voiles intérieur
                     use_container_width=True)
 
 
-with st.expander("Ecart dans les voiles version thèse"):
+with st.expander("Ecart dans les voiles orienté suivant cas de charge"):
     st.text("On ne conserve que les voiles orientés dans la direction des cas de charges")
     st.subheader("Voiles individuels dans la direction du cas de charge")
-    df2 = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
+    df_ecart_voiles_orient = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
 
-    st.dataframe(df2.style.format(precision=3).map(
+    st.dataframe(df_ecart_voiles_orient.style.format(precision=3).map(
     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
                     use_container_width=True)
-    fig = px.scatter(df2, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+    fig = px.scatter(df_ecart_voiles_orient, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
                      title="Ecart relatif des efforts dans les voiles intérieurs", )
     fig.update_xaxes(visible=False,)
     fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
@@ -386,15 +386,15 @@ with st.expander("Ecart dans les voiles version thèse"):
 
     col_m_these_x, col_m_these_y = st.columns(2)
     
-    fig_x = px.box(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+    fig_x = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs", )
     fig_x.update_xaxes(showgrid=True ,dtick=0.05)
     fig_x.update_yaxes(showgrid=True ,dtick=1.)
     fig_x.update_traces(boxmean=True)
     fig_x.update_layout(height=800)
     col_m_these_x.plotly_chart(fig_x)
-    df2_x = df2.loc[df2["Cas_de_charges"] == "3 (CQC)"]
-    col_m_these_x.dataframe(df2_x.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+    df_ecart_voiles_orient_x = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"]
+    col_m_these_x.dataframe(df_ecart_voiles_orient_x.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
                     use_container_width=True)
 
@@ -405,15 +405,15 @@ with st.expander("Ecart dans les voiles version thèse"):
     # fig_x_I.update_layout(height=800)
     # col_m_these_x.plotly_chart(fig_x_I,  theme="streamlit")
 
-    fig_y = px.box(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+    fig_y = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
                    title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
     fig_y.update_xaxes(showgrid=True ,dtick=0.05)
     fig_x.update_yaxes(showgrid=True ,dtick=1.)
     fig_y.update_traces(boxmean=True)
     fig_y.update_layout(height=800)
     col_m_these_y.plotly_chart(fig_y)
-    df2_y = df2.loc[df2["Cas_de_charges"] == "4 (CQC)"]
-    col_m_these_y.dataframe(df2_y.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+    df_ecart_voiles_orient_y = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"]
+    col_m_these_y.dataframe(df_ecart_voiles_orient_y.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
                     use_container_width=True)
 
@@ -425,6 +425,9 @@ with st.expander("Ecart dans les voiles version thèse"):
     # col_m_these_y.plotly_chart(fig_y_I)
 
     st.subheader("Moyenne dans le bâtiment dans la direction du cas de charge")
-    st.dataframe(df2.groupby(["Cas_de_charges"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+    st.dataframe(df_ecart_voiles_orient.groupby(["Cas_de_charges"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
                     use_container_width=True)
+    
+st.subheader("Version thèse")
+df_ecart_voiles_orient
