@@ -21,10 +21,10 @@ st.title("Analyse des notes de calculs sismiques")
 #-----------------------------------------------------------------------------------------------------------------------
 with st.sidebar:
     st.title("Notes de calcul Advance")
-    with st.expander("Dépots des notes de calcul"):
+    st.subheader("Dépots des notes de calcul")
 # Récupération des fichiers drop dans la barre latérale
-        ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
-        ndc_base = st.file_uploader('Sans rupteur', type='txt')
+    ndc_rupteur = st.file_uploader('Avec rupteurs', type='txt')
+    ndc_base = st.file_uploader('Sans rupteur', type='txt')
     st.divider()
 
     st.title("Paramètres de vérifications")
@@ -166,56 +166,56 @@ st.divider()
 #                                     Analyse des efforts dans les rupteurs
 #-----------------------------------------------------------------------------------------------------------------------
 # Récupération des DF et des indicateurs de vérification
-resistance_slb = ndc.resistance_slabe.copy()
-verif_rupt, efforts_max,_, df_rupt_defect = (filaires.analyse_efforts_rupteurs(
-    pages_rupteur["Efforts_filaires"],
-    pages_rupteur["Description_filaires"],
-    resistance_slabe=ndc.resistance_slabe,
-    gamma=gamma
-    ))
-# On renomme les index de efforts max
-for slabe in efforts_max:
-    efforts_max[slabe]["Fx_Ed"] = efforts_max[slabe].pop("Fx")
-    efforts_max[slabe]["Fy_Ed"] = efforts_max[slabe].pop("Fy")
-    efforts_max[slabe]["Fz_Ed"] = efforts_max[slabe].pop("Fz")
-# Sous-titre
-st.subheader("Analyse des efforts dans les rupteurs ")
-# Affichage de l'éat des vérification des efforts dans les rupteurs
-if verif_rupt:
-    st.success("Les efforts appliquées aux différents rupteurs sont tous inférieurs aux efforts résistants")
-else:
-    st.error("Attention, certains rupteurs subissent des efforts trop importants !")
-# Séparation en 4 colonnes
-col5, col6, col7, col_rupt_defect = st.columns([1.9, 2.1, 2, 1.4], gap="small")
-#Affichage des efforts max appliqués à chaque modèle de rupteur
-with col5:
-    st.write("Efforts maximaux appliqués aux rupteurs (kN)")
-    df_efforts_max = pd.DataFrame(efforts_max).transpose()
-    st.dataframe(abs(df_efforts_max), use_container_width=True)
-# Affichage des efforts max majorés par gamme appliqués à chaque modèle de rupteur
-with col6:
-    st.write("Efforts max majorés appliqués aux rupteurs (kN)")
-    df_efforts_max = pd.DataFrame(efforts_max).transpose()*gamma
-    df_efforts_max.columns = ["Fx_Ed_maj", "Fy_Ed_maj", "Fz_Ed_maj"]
-    st.dataframe(abs(df_efforts_max), use_container_width=True)
-    info_gama = st.info(
-        f"La classe de ductilité {classe_duct} implique d'utiliser un coefficient majorateur γ = {gamma} "
-        f"lors de la vérification des efforts dans les rupteurs")
-# Affichage des résistances de tous les modèles de rupteur
-with col7:
-    st.write("Efforts résistants des rupteurs (kN)")
-    df_resistance_slb = pd.DataFrame(resistance_slb).transpose()
-    st.dataframe(df_resistance_slb, use_container_width=True)
-# Menu déroulant pour afficher les rupteurs trop sollicités
+# resistance_slb = ndc.resistance_slabe.copy()
+# verif_rupt, efforts_max,_, df_rupt_defect = (filaires.analyse_efforts_rupteurs(
+#     pages_rupteur["Efforts_filaires"],
+#     pages_rupteur["Description_filaires"],
+#     resistance_slabe=ndc.resistance_slabe,
+#     gamma=gamma
+#     ))
+# # On renomme les index de efforts max
+# for slabe in efforts_max:
+#     efforts_max[slabe]["Fx_Ed"] = efforts_max[slabe].pop("Fx")
+#     efforts_max[slabe]["Fy_Ed"] = efforts_max[slabe].pop("Fy")
+#     efforts_max[slabe]["Fz_Ed"] = efforts_max[slabe].pop("Fz")
+# # Sous-titre
+# st.subheader("Analyse des efforts dans les rupteurs ")
+# # Affichage de l'éat des vérification des efforts dans les rupteurs
+# if verif_rupt:
+#     st.success("Les efforts appliquées aux différents rupteurs sont tous inférieurs aux efforts résistants")
+# else:
+#     st.error("Attention, certains rupteurs subissent des efforts trop importants !")
+# # Séparation en 4 colonnes
+# col5, col6, col7, col_rupt_defect = st.columns([1.9, 2.1, 2, 1.4], gap="small")
+# #Affichage des efforts max appliqués à chaque modèle de rupteur
+# with col5:
+#     st.write("Efforts maximaux appliqués aux rupteurs (kN)")
+#     df_efforts_max = pd.DataFrame(efforts_max).transpose()
+#     st.dataframe(abs(df_efforts_max), use_container_width=True)
+# # Affichage des efforts max majorés par gamme appliqués à chaque modèle de rupteur
+# with col6:
+#     st.write("Efforts max majorés appliqués aux rupteurs (kN)")
+#     df_efforts_max = pd.DataFrame(efforts_max).transpose()*gamma
+#     df_efforts_max.columns = ["Fx_Ed_maj", "Fy_Ed_maj", "Fz_Ed_maj"]
+#     st.dataframe(abs(df_efforts_max), use_container_width=True)
+#     info_gama = st.info(
+#         f"La classe de ductilité {classe_duct} implique d'utiliser un coefficient majorateur γ = {gamma} "
+#         f"lors de la vérification des efforts dans les rupteurs")
+# # Affichage des résistances de tous les modèles de rupteur
+# with col7:
+#     st.write("Efforts résistants des rupteurs (kN)")
+#     df_resistance_slb = pd.DataFrame(resistance_slb).transpose()
+#     st.dataframe(df_resistance_slb, use_container_width=True)
+# # Menu déroulant pour afficher les rupteurs trop sollicités
 
-with col_rupt_defect:
-    expander = st.expander("Voir les rupteurs trop sollicités")
-    if not verif_rupt:
-        with expander:
-            st.dataframe(df_rupt_defect, use_container_width=True)
-    else:
-        st.caption("")
-st.divider()
+# with col_rupt_defect:
+#     expander = st.expander("Voir les rupteurs trop sollicités")
+#     if not verif_rupt:
+#         with expander:
+#             st.dataframe(df_rupt_defect, use_container_width=True)
+#     else:
+#         st.caption("")
+# st.divider()
 #-----------------------------------------------------------------------------------------------------------------------
 #                                     Analyse des efforts dans les voiles
 #-----------------------------------------------------------------------------------------------------------------------
@@ -248,40 +248,40 @@ def color_voil(val, limite):
     return f'background-color: {color}'
 
 #Vérification des efforts
-st.subheader("Vérification des efforts dans les voiles")
-# Vérificationd es coordonnées
-# Affichage de l'état de la vérification des coordonnées des voiles
-if verif_coord_voiles:
-    st.success("Les coordonnées des voiles intérieurs sont indentiques dans les 2 notes de calcul")
-else:
-    st.warning("Attention : les coordonnées des voiles ne sont pas indentiques dans les 2 notes de calculs. "
-               "Vérifier manuellement la cohérences des coordonées")
-# Affichage retractable des voiles dont les coordonnées ne correspondent pas
-expander2 = st.expander("Voir les voiles avec des incohérences de coordonnées")
-with expander2:
-    st.dataframe(df_verif_coord, hide_index=True, use_container_width=True)
-#.......................................................................
-# Méthode de vérification des efforts dans les voiles individuellement
-#.......................................................................
-with st.expander("#### *A. Vérification des voiles individuellement*"):
-    if verif_voiles_indiv:
-        st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
-                f"de {ecart_max_voiles * 100}%")
-    else:
-        st.warning(f"Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
-                f"({ecart_max_voiles * 100}%)")
-    col_print = ["n°_element_r", "cas_de_charges_r", "txy_haut_r", "txy_haut_b", "ecart_txy_haut", "txy_bas_r", "txy_bas_b",
-                "ecart_txy_bas"]
-    # Affichage de l'état de la vérification des coordonnées
-    st.dataframe(df_voiles_defect.loc[:, col_print].style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
-                    use_container_width=True)
+st.header("Vérification des efforts dans les voiles")
+# # Vérificationd es coordonnées
+# # Affichage de l'état de la vérification des coordonnées des voiles
+# if verif_coord_voiles:
+#     st.success("Les coordonnées des voiles intérieurs sont indentiques dans les 2 notes de calcul")
+# else:
+#     st.warning("Attention : les coordonnées des voiles ne sont pas indentiques dans les 2 notes de calculs. "
+#                "Vérifier manuellement la cohérences des coordonées")
+# # Affichage retractable des voiles dont les coordonnées ne correspondent pas
+# expander2 = st.expander("Voir les voiles avec des incohérences de coordonnées")
+# with expander2:
+#     st.dataframe(df_verif_coord, hide_index=True, use_container_width=True)
+# #.......................................................................
+# # Méthode de vérification des efforts dans les voiles individuellement
+# #.......................................................................
+# with st.expander("#### *A. Vérification des voiles individuellement*"):
+#     if verif_voiles_indiv:
+#         st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
+#                 f"de {ecart_max_voiles * 100}%")
+#     else:
+#         st.warning(f"Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
+#                 f"({ecart_max_voiles * 100}%)")
+#     col_print = ["n°_element_r", "cas_de_charges_r", "txy_haut_r", "txy_haut_b", "ecart_txy_haut", "txy_bas_r", "txy_bas_b",
+#                 "ecart_txy_bas"]
+#     # Affichage de l'état de la vérification des coordonnées
+#     st.dataframe(df_voiles_defect.loc[:, col_print].style.format(precision=3).map(
+#     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
+#                     use_container_width=True)
 
-    choix_ecarts = st.toggle("Voir la liste complète des voiles")
-    if choix_ecarts:
-        st.dataframe(df_ecarts_efforts_voiles.loc[:, col_print].style.format(precision=3).map(
-                func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
-                            use_container_width=True)
+#     choix_ecarts = st.toggle("Voir la liste complète des voiles")
+#     if choix_ecarts:
+#         st.dataframe(df_ecarts_efforts_voiles.loc[:, col_print].style.format(precision=3).map(
+#                 func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_txy_haut", "ecart_txy_bas"]),
+#                             use_container_width=True)
 #............................................................................
 # Méthode de vérification des efforts dans les voiles pondérés par l'inertie
 #............................................................................
@@ -305,28 +305,32 @@ with st.expander("#### *A. Vérification des voiles individuellement*"):
 # Méthode de vérification des efforts dans les voiles avec torseurs par étages
 #............................................................................
 # Affichage retractable pour les résultats de la méthode
-with st.expander("#### *C. Vérification des torseurs par étage*"):
-# Affichage de l'état de vérification des écarts d'efforts
-    if verif_voile_int_etage:
-        st.success(f"Les écarts d'efforts dans les voiles intérieurs ne dépassent pas la limite fixée "
-                f"de {ecart_max_voiles*100}%")
-    else:
-        st.warning("Attention : Les écarts d'efforts dans les voiles intérieurs dépassent la limite fixée "
-                f"({ecart_max_voiles*100}%)")
+st.markdown("### *Vérification des torseurs par étage  (Anaïs)*")
 
-    st.dataframe(df_voiles_int_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX", "Ecart_TY"]),
-                hide_index=True,
-                use_container_width=True)
+df_torseur_voiles_etages = df_voiles_int_glob_etages.copy()
+filtre_x = df_torseur_voiles_etages["Cas_de_charges"] == "3 (CQC)"
+filtre_y = df_torseur_voiles_etages["Cas_de_charges"] == "4 (CQC)"
+df_torseur_voile_etage_x = df_torseur_voiles_etages.loc[filtre_x, :].drop(["Ecart_TY", "TY_base", "TY_rupt"], axis=1)
+df_torseur_voile_etage_y = df_torseur_voiles_etages.loc[filtre_y, :].drop(["Ecart_TX", "TX_base", "TX_rupt"], axis=1)
+df_tors_moy_bat_x = df_torseur_voile_etage_x.groupby(["Cas_de_charges", "loc"], as_index=False)[["Ecart_TX"]].mean()
+df_tors_moy_bat_y = df_torseur_voile_etage_y.groupby(["Cas_de_charges", "loc"], as_index=False)[["Ecart_TY"]].mean()
+col_tors_x, col_tors_y = st.columns(2)
+col_tors_x.dataframe(df_torseur_voile_etage_x.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX"]),
+            hide_index=True,
+            use_container_width=True)
+col_tors_x.dataframe(df_tors_moy_bat_x.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX"]),
+            hide_index=True,
+            use_container_width=True)
+col_tors_y.dataframe(df_torseur_voile_etage_y.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TY"]),
+            hide_index=True,
+            use_container_width=True)
+col_tors_y.dataframe(df_tors_moy_bat_y.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TY"]),
+            hide_index=True,
+            use_container_width=True)
+
 
 st.divider()
-
-
-#-------------------------------------------------------------------------------
-# TEST #
-#---------------------------------------------------------------------------------
-st.markdown("#### *TEST*")
-
-
+st.markdown("### *Vérification des voiles natures*")
 df_efforts_voiles_rupt = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_rupteur['Coordonnées_voiles'], 
                     page_epaisseurs_voiles=pages_rupteur['Epaisseurs_voiles'], 
                     page_efforts_voiles=pages_rupteur["Torseurs_voiles"],
@@ -337,97 +341,174 @@ df_efforts_voiles_base = voiles_V3.get_efforts_voiles(page_coord_voiles=pages_ba
                     page_efforts_voiles=pages_base["Torseurs_voiles"],
                     list_cdc=["3 (CQC)", "4 (CQC)"])
 
-with st.expander("Effort dans les voiles intérieurs"):
-    "df_efforts_voiles_rupt"
-    st.dataframe(df_efforts_voiles_rupt)
-    "df_efforts_voiles_base"
-    st.dataframe(df_efforts_voiles_base)
-with st.expander("Ecarts des efforts dans les voiles intérieurs"):
-    df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
-    st.dataframe(df_ecart)
-    fig = px.scatter(df_ecart, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
-                     title="Ecart relatif des efforts dans les voiles intérieurs", )
-    fig.update_xaxes(visible=False,)
-    fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
-    st.plotly_chart(fig)
+df_ecart = voiles_V3.calc_ecarts_efforts_voiles(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"])
+with st.expander("Tableau des écarts individuels"):
+    st.dataframe(df_ecart.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]),
+                use_container_width=True)
+col_indiv_x, col_indiv_y = st.columns(2)
+fig_ecart_haut = px.scatter(df_ecart, x="n°_etages", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+                    title="Ecart relatif des efforts HAUT dans les voiles intérieurs", )
+fig_ecart_bas = px.scatter(df_ecart, x="n°_etages", y="ecart_Txy_bas_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+                    title="Ecart relatif des efforts BAS dans les voiles intérieurs", )
+col_indiv_x.plotly_chart(fig_ecart_haut)
+col_indiv_y.plotly_chart(fig_ecart_bas)
+# st.dataframe(df_voiles_int_glob_etages.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["Ecart_TX", "Ecart_TY"]),
+#             hide_index=True,
+#             use_container_width=True)
+
+st.markdown("##### Moyenne nature par étage")
+col_indiv_etage_x, col_indiv_etage_y = st.columns(2)
+df_ecart_moy_etage = df_ecart.groupby(["Cas_de_charges", "n°_etages"], as_index=False)[["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]].mean()
+df_ecart_moy_etage_x = df_ecart_moy_etage.loc[df_ecart_moy_etage["Cas_de_charges"]=="3 (CQC)", :]
+df_ecart_moy_etage_y = df_ecart_moy_etage.loc[df_ecart_moy_etage["Cas_de_charges"]=="4 (CQC)", :]
+df_ecart_moy_bat = df_ecart.groupby(["Cas_de_charges"], as_index=False)[["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]].mean()
+df_ecart_moy_bat_x = df_ecart_moy_bat.loc[df_ecart_moy_bat["Cas_de_charges"]=="3 (CQC)", :]
+df_ecart_moy_bat_y = df_ecart_moy_bat.loc[df_ecart_moy_bat["Cas_de_charges"]=="4 (CQC)", :]
+col_indiv_etage_x.dataframe(df_ecart_moy_etage_x.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]),
+                hide_index=True,
+                use_container_width=True)
+col_indiv_etage_y.dataframe(df_ecart_moy_etage_y.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]),
+                hide_index=True,
+                use_container_width=True)
+st.markdown("##### Moyenne nature dans le bâtiment")
+st.dataframe(df_ecart_moy_bat.style.format(precision=3).map(lambda x: color_voil(val=x, limite=ecart_max_voiles),subset=["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]),
+                hide_index=True,
+                use_container_width=True)
+
+st.divider()
+
+st.markdown("### *Vérification des voiles avec leur inertie*")
+st.markdown("##### Moyenne pondérée par l'inertie par étage ")
+df_ecart_inert_etage = voiles_V3.analyse_efforts_voiles_pond_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],).drop(
+    ["Dir_charges", "ecart_Txy_bas_abs_pond", "ecart_Txy_haut_abs_pond"], axis=1)
+df_ecart_inert_etage_x = df_ecart_inert_etage.loc[df_ecart_inert_etage["Cas_de_charges"] == "3 (CQC)"]
+df_ecart_inert_etage_y = df_ecart_inert_etage.loc[df_ecart_inert_etage["Cas_de_charges"] == "4 (CQC)"]
+col_inert_x, col_inert_y = st.columns(2)
+col_inert_x.dataframe(df_ecart_inert_etage_x.style.format(precision=3).map(func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
+col_inert_y.dataframe(df_ecart_inert_etage_y.style.format(precision=3).map(func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
+st.markdown("##### Moyenne pondérée par l'inertie dans le bâtiment")
+df_ecart_inert_bat = voiles_V3.calc_moy_pond_ecarts_voiles_bat(df_ecart, ).drop(["Dir_charges", "ecart_Txy_bas_abs_pond", "ecart_Txy_haut_abs_pond"], axis=1)
+st.dataframe(df_ecart_inert_bat.style.format(precision=3).map(
+func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
+
+
+st.divider()
+st.markdown("### *Vérification des voiles orientés suivant le cas de charge*")
+st.text("On ne conserve que les voiles orientés dans la direction des cas de charges")
+df_ecart_voiles_orient = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
+with st.expander("Tableau des écarts individuels"):
+    st.dataframe(df_ecart_voiles_orient)
+df_ecart_voiles_orient_x = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"]
+df_ecart_voiles_orient_y = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"]
+col_orient_x, col_orient_y = st.columns(2)
+
+fig_ecart_orient_haut = px.scatter(df_ecart, x="n°_etages", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+                    title="Ecart relatif des efforts HAUT dans les voiles intérieurs ORIENTES", )
+fig_ecart_orient_bas = px.scatter(df_ecart, x="n°_etages", y="ecart_Txy_bas_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+                    title="Ecart relatif des efforts BAS dans les voiles intérieurs ORIENTES", )
+col_orient_x.plotly_chart(fig_ecart_orient_haut, key="fig_ecart_orient_haut")
+col_orient_y.plotly_chart(fig_ecart_orient_bas, key="fig_ecart_orient_bas")
+
+df_ecart_voiles_orient_etage = df_ecart_voiles_orient.groupby(["Cas_de_charges", "n°_etages"], as_index=False)[["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]].mean()
+df_ecart_voiles_orient_bat = df_ecart_voiles_orient.groupby(["Cas_de_charges"], as_index=False)[["ecart_Txy_bas_rel", "ecart_Txy_haut_rel"]].mean()
+df_ecart_voiles_orient_etage_x = df_ecart_voiles_orient_etage.loc[df_ecart_voiles_orient_etage["Cas_de_charges"] == "3 (CQC)"]
+df_ecart_voiles_orient_etage_y = df_ecart_voiles_orient_etage.loc[df_ecart_voiles_orient_etage["Cas_de_charges"] == "4 (CQC)"]
+st.markdown("##### Moyenne nature des voiles intérieurs orientés par étage")
+col_orient_x_etage, col_orient_y_etage = st.columns(2)
+col_orient_x_etage.dataframe(df_ecart_voiles_orient_etage_x.style.format(precision=3).map(
+func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
+                use_container_width=True)
+col_orient_y_etage.dataframe(df_ecart_voiles_orient_etage_y.style.format(precision=3).map(
+func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
+                use_container_width=True)
+st.markdown("##### Moyenne nature des voiles orientés dans le bâtiment")
+st.dataframe(df_ecart_voiles_orient_bat.style.format(precision=3).map(
+func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
+                use_container_width=True)
+st.divider()
+
+
+st.markdown("### *Vérification des voiles orientés avec inertie (Thèse Gaël)*")
+st.text("On ne conserve que les voiles orientés dans la direction des cas de charges et on pondères les moyenne par l'inertie")
+df_ecart_orient_pond_etage = voiles_V3.calc_moy_pond_ecarts_voiles_etages(df_ecart_voiles_orient).drop(["Dir_charges", "ecart_Txy_bas_abs_pond", "ecart_Txy_haut_abs_pond"], axis=1)
+df_ecart_orient_pond_etage_x = df_ecart_orient_pond_etage.loc[df_ecart_orient_pond_etage["Cas_de_charges"] == "3 (CQC)"]
+df_ecart_orient_pond_etage_y = df_ecart_orient_pond_etage.loc[df_ecart_orient_pond_etage["Cas_de_charges"] == "4 (CQC)"]
+st.markdown("##### Moyenne pondérée par l'inertie des voiles orientés par étage")
+col_inert_orient_x, col_inert_orient_y = st.columns(2)
+col_inert_orient_x.dataframe(df_ecart_orient_pond_etage_x.style.format(precision=3).map(func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
+col_inert_orient_y.dataframe(df_ecart_orient_pond_etage_y.style.format(precision=3).map(func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
+st.markdown("##### Moyenne pondérée par l'inertie des voiles orientés dans le bâtiment")
+df_ecart_orient_pond_bat = df_ecart_orient_pond_etage.groupby(["Cas_de_charges"], as_index=False)[["ecart_Txy_bas_rel_pond","ecart_Txy_haut_rel_pond" ]].mean()
+st.dataframe(df_ecart_orient_pond_bat.style.format(precision=3).map(func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
+                use_container_width=True)
 
 
 
 
 
-with st.expander("Pondération inertielle des écarts dans les voiles intérieurs"):
-    st.subheader("Moyenne pondérée par l'inertie par étage ")
-    df_fin = voiles_V3.analyse_efforts_voiles_pond_etages(df_efforts_voiles_rupt, df_efforts_voiles_base,list_effort=["Txy_bas", "Txy_haut"],)
-    st.dataframe(df_fin.style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
-                    use_container_width=True)
-    st.subheader("Moyenne pondérée par l'inertie dans le bâtiment")
-    df = voiles_V3.calc_moy_pond_ecarts_voiles_bat(df_ecart, )
-    st.dataframe(df.style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel_pond", "ecart_Txy_bas_rel_pond"]),
-                    use_container_width=True)
+# with st.expander("XXXXXXXXXXXXXXXXXXXXXXXX"):
+#     st.text("On ne conserve que les voiles orientés dans la direction des cas de charges")
+#     st.subheader("Voiles individuels dans la direction du cas de charge")
+#     df_ecart_voiles_orient = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
 
+#     st.dataframe(df_ecart_voiles_orient.style.format(precision=3).map(
+#     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
+#                     use_container_width=True)
+#     fig = px.scatter(df_ecart_voiles_orient, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
+#                      title="Ecart relatif des efforts dans les voiles intérieurs", )
+#     fig.update_xaxes(visible=False,)
+#     fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
+#     st.plotly_chart(fig)
 
-with st.expander("Ecart dans les voiles orienté suivant cas de charge"):
-    st.text("On ne conserve que les voiles orientés dans la direction des cas de charges")
-    st.subheader("Voiles individuels dans la direction du cas de charge")
-    df_ecart_voiles_orient = voiles_V3.get_ecarts_voiles_orient(df_ecart).sort_values(["N°_element_rupt"])
+#     st.subheader("Etude par étage dans la direction du cas de charge")
 
-    st.dataframe(df_ecart_voiles_orient.style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel", "ecart_Txy_bas_rel"]),
-                    use_container_width=True)
-    fig = px.scatter(df_ecart_voiles_orient, x="id", y="ecart_Txy_haut_rel", color="Cas_de_charges", color_discrete_sequence=px.colors.qualitative.G10, 
-                     title="Ecart relatif des efforts dans les voiles intérieurs", )
-    fig.update_xaxes(visible=False,)
-    fig.update_yaxes(range=[-0.55, 1.5], dtick=0.1)
-    st.plotly_chart(fig)
-
-    st.subheader("Etude par étage dans la direction du cas de charge")
-
-    col_m_these_x, col_m_these_y = st.columns(2)
+#     col_m_these_x, col_m_these_y = st.columns(2)
     
-    fig_x = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
-                   title="Répartition des écarts relatifs", )
-    fig_x.update_xaxes(showgrid=True ,dtick=0.05)
-    fig_x.update_yaxes(showgrid=True ,dtick=1.)
-    fig_x.update_traces(boxmean=True)
-    fig_x.update_layout(height=800)
-    col_m_these_x.plotly_chart(fig_x)
-    df_ecart_voiles_orient_x = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"]
-    col_m_these_x.dataframe(df_ecart_voiles_orient_x.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
-                    use_container_width=True)
+#     fig_x = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+#                    title="Répartition des écarts relatifs", )
+#     fig_x.update_xaxes(showgrid=True ,dtick=0.05)
+#     fig_x.update_yaxes(showgrid=True ,dtick=1.)
+#     fig_x.update_traces(boxmean=True)
+#     fig_x.update_layout(height=800)
+#     col_m_these_x.plotly_chart(fig_x)
+#     df_ecart_voiles_orient_x = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "3 (CQC)"]
+#     col_m_these_x.dataframe(df_ecart_voiles_orient_x.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+#     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
+#                     use_container_width=True)
 
-    # fig_x_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges", size="I_prep",
-    #                title="Taille du point représente l'inertie",)
-    # fig_x_I.update_xaxes(showgrid=True ,dtick=0.05)
-    # fig_x_I.update_yaxes(showgrid=True ,dtick=1.0)
-    # fig_x_I.update_layout(height=800)
-    # col_m_these_x.plotly_chart(fig_x_I,  theme="streamlit")
+#     # fig_x_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "3 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges", size="I_prep",
+#     #                title="Taille du point représente l'inertie",)
+#     # fig_x_I.update_xaxes(showgrid=True ,dtick=0.05)
+#     # fig_x_I.update_yaxes(showgrid=True ,dtick=1.0)
+#     # fig_x_I.update_layout(height=800)
+#     # col_m_these_x.plotly_chart(fig_x_I,  theme="streamlit")
 
-    fig_y = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
-                   title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
-    fig_y.update_xaxes(showgrid=True ,dtick=0.05)
-    fig_x.update_yaxes(showgrid=True ,dtick=1.)
-    fig_y.update_traces(boxmean=True)
-    fig_y.update_layout(height=800)
-    col_m_these_y.plotly_chart(fig_y)
-    df_ecart_voiles_orient_y = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"]
-    col_m_these_y.dataframe(df_ecart_voiles_orient_y.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
-                    use_container_width=True)
+#     fig_y = px.box(df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"], y="n°_etages", x="ecart_Txy_haut_rel", orientation="h", color="Cas_de_charges", points="all",
+#                    title="Répartition des écarts relatifs" , color_discrete_sequence=px.colors.qualitative.G10 )
+#     fig_y.update_xaxes(showgrid=True ,dtick=0.05)
+#     fig_x.update_yaxes(showgrid=True ,dtick=1.)
+#     fig_y.update_traces(boxmean=True)
+#     fig_y.update_layout(height=800)
+#     col_m_these_y.plotly_chart(fig_y)
+#     df_ecart_voiles_orient_y = df_ecart_voiles_orient.loc[df_ecart_voiles_orient["Cas_de_charges"] == "4 (CQC)"]
+#     col_m_these_y.dataframe(df_ecart_voiles_orient_y.groupby(["Cas_de_charges", "n°_etages"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+#     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
+#                     use_container_width=True)
 
-    # fig_y_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges",
-    #                title="Taille du point représente l'inertie", color_discrete_sequence=px.colors.qualitative.G10, size="I_prep")
-    # fig_y_I.update_xaxes(showgrid=True ,dtick=0.05)
-    # fig_y_I.update_yaxes(showgrid=True ,dtick=1.0)
-    # fig_y_I.update_layout(height=800)
-    # col_m_these_y.plotly_chart(fig_y_I)
+#     # fig_y_I= px.scatter(df2.loc[df2["Cas_de_charges"] == "4 (CQC)"], x="ecart_Txy_haut_rel", y="n°_etages", color="Cas_de_charges",
+#     #                title="Taille du point représente l'inertie", color_discrete_sequence=px.colors.qualitative.G10, size="I_prep")
+#     # fig_y_I.update_xaxes(showgrid=True ,dtick=0.05)
+#     # fig_y_I.update_yaxes(showgrid=True ,dtick=1.0)
+#     # fig_y_I.update_layout(height=800)
+#     # col_m_these_y.plotly_chart(fig_y_I)
 
-    st.subheader("Moyenne dans le bâtiment dans la direction du cas de charge")
-    st.dataframe(df_ecart_voiles_orient.groupby(["Cas_de_charges"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
-    func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
-                    use_container_width=True)
+#     st.subheader("Moyenne dans le bâtiment dans la direction du cas de charge")
+#     st.dataframe(df_ecart_voiles_orient.groupby(["Cas_de_charges"])[["ecart_Txy_haut_rel"]].mean().style.format(precision=3).map(
+#     func=(lambda x: color_voil(val=x, limite=ecart_max_voiles)), subset=["ecart_Txy_haut_rel"]),
+#                     use_container_width=True)
     
-st.subheader("Version thèse")
-df_ecart_voiles_orient
