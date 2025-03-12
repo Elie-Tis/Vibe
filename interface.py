@@ -154,7 +154,7 @@ if verif_freq:
 else:
     st.error(f"Attention, les écarts de fréquences sont supérieurs à la limite fixée de {ecart_max_freq*100} %")
 # Affichage du DF
-st.dataframe(df_vm_prep.sort_values(by=['Direction', "Rupteurs"], ascending=[True, False]), use_container_width=True, hide_index=True)
+st.dataframe(df_vm_prep.sort_values(by=['Direction', "Rupteurs"], ascending=True), use_container_width=True, hide_index=True)
 # Séparation en 2 colonnes et affichages des écarts de fréquences suivant les 2 axes
 col3, col4 = st.columns(2)
 with col3:
