@@ -91,8 +91,8 @@ def verif_ecart_val_mod(val_mod_rupt_prep, val_mod_base_prep, ecart_max_pc):
     ecart_freq_x = (abs(val_mod_rupt_prep['x']['Frequence_Hz'] -val_mod_base_prep['x']['Frequence_Hz']) /
                     val_mod_base_prep['x']['Frequence_Hz'])
 
-    ecart_freq_y = (abs(val_mod_rupt_prep['x']['Frequence_Hz'] -val_mod_base_prep['x']['Frequence_Hz']) /
-                    val_mod_base_prep['x']['Frequence_Hz'])
+    ecart_freq_y = (abs(val_mod_rupt_prep['y']['Frequence_Hz'] -val_mod_base_prep['y']['Frequence_Hz']) /
+                    val_mod_base_prep['y']['Frequence_Hz'])
     # Vérification sur chaque axe par rapport à l'écart max
     if ecart_freq_x >= ecart_max_pc/100 or ecart_freq_y >= ecart_max_pc/100:
         verification = False
