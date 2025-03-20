@@ -114,8 +114,8 @@ def analyse_valeurs_modales(page_val_mod_rupt, page_val_mod_base, ecart_max_freq
     val_mod_rupt_prep, df_val_mod_rupt_prep = get_valeurs_modales_prep(df_val_mod_rupt)  # Avec rupteurs
     val_mod_base_prep, df_val_mod_base_prep = get_valeurs_modales_prep(df_val_mod_base)  # Sans rupteur
     # On rajoute une colonne dans le DF pour informer sur la présence de rupteurs
-    df_val_mod_rupt_prep["Rupteurs"] = "Oui"
-    df_val_mod_base_prep["Rupteurs"] = "Non"
+    df_val_mod_rupt_prep["Rupteurs"] = "Oui" 
+    df_val_mod_base_prep["Rupteurs"] = "Non" #ddd
     # On crée un DF en rassemblant les DF avec et sans rupteur
     df_val_mod_prep = pd.concat([df_val_mod_rupt_prep, df_val_mod_base_prep]).sort_values(by=['Direction', "Rupteurs"],
                                                                                           ascending=[True, False])
