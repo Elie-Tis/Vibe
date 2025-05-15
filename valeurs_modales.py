@@ -65,8 +65,7 @@ def get_valeurs_modales_prep(dataframe):
 
     #Récupération des valeurs modales des modes prépondérants
     mode_prep_x, mode_prep_y = df_val_mod_prep['Mode_N'].values  # On récupère les modes prépondérants
-    freq_prep_x, freq_prep_y = df_val_mod_prep[
-        'Frequence_Hz'].values  # On récupère les fréquences des modes préponderants
+    freq_prep_x, freq_prep_y = df_val_mod_prep['Frequence_Hz'].values  # On récupère les fréquences des modes préponderants
     df_val_mod_prep = df_val_mod_prep.reindex(
         ['Direction', 'Rupteurs', 'Mode_N', 'Periode_s', 'Frequence_Hz', 'Mx_kg', 'Mx_pc', 'My_kg', 'My_pc'], axis=1)
 
