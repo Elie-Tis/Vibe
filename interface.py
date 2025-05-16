@@ -165,57 +165,57 @@ st.divider()
 #-----------------------------------------------------------------------------------------------------------------------
 #                                     Analyse des efforts dans les rupteurs
 #-----------------------------------------------------------------------------------------------------------------------
-# Récupération des DF et des indicateurs de vérification
-# resistance_slb = ndc.resistance_slabe.copy()
-# verif_rupt, efforts_max,_, df_rupt_defect = (filaires.analyse_efforts_rupteurs(
-#     pages_rupteur["Efforts_filaires"],
-#     pages_rupteur["Description_filaires"],
-#     resistance_slabe=ndc.resistance_slabe,
-#     gamma=gamma
-#     ))
-# # On renomme les index de efforts max
-# for slabe in efforts_max:
-#     efforts_max[slabe]["Fx_Ed"] = efforts_max[slabe].pop("Fx")
-#     efforts_max[slabe]["Fy_Ed"] = efforts_max[slabe].pop("Fy")
-#     efforts_max[slabe]["Fz_Ed"] = efforts_max[slabe].pop("Fz")
-# # Sous-titre
-# st.subheader("Analyse des efforts dans les rupteurs ")
-# # Affichage de l'éat des vérification des efforts dans les rupteurs
-# if verif_rupt:
-#     st.success("Les efforts appliquées aux différents rupteurs sont tous inférieurs aux efforts résistants")
-# else:
-#     st.error("Attention, certains rupteurs subissent des efforts trop importants !")
-# # Séparation en 4 colonnes
-# col5, col6, col7, col_rupt_defect = st.columns([1.9, 2.1, 2, 1.4], gap="small")
-# #Affichage des efforts max appliqués à chaque modèle de rupteur
-# with col5:
-#     st.write("Efforts maximaux appliqués aux rupteurs (kN)")
-#     df_efforts_max = pd.DataFrame(efforts_max).transpose()
-#     st.dataframe(abs(df_efforts_max), use_container_width=True)
-# # Affichage des efforts max majorés par gamme appliqués à chaque modèle de rupteur
-# with col6:
-#     st.write("Efforts max majorés appliqués aux rupteurs (kN)")
-#     df_efforts_max = pd.DataFrame(efforts_max).transpose()*gamma
-#     df_efforts_max.columns = ["Fx_Ed_maj", "Fy_Ed_maj", "Fz_Ed_maj"]
-#     st.dataframe(abs(df_efforts_max), use_container_width=True)
-#     info_gama = st.info(
-#         f"La classe de ductilité {classe_duct} implique d'utiliser un coefficient majorateur γ = {gamma} "
-#         f"lors de la vérification des efforts dans les rupteurs")
-# # Affichage des résistances de tous les modèles de rupteur
-# with col7:
-#     st.write("Efforts résistants des rupteurs (kN)")
-#     df_resistance_slb = pd.DataFrame(resistance_slb).transpose()
-#     st.dataframe(df_resistance_slb, use_container_width=True)
-# # Menu déroulant pour afficher les rupteurs trop sollicités
+Récupération des DF et des indicateurs de vérification
+resistance_slb = ndc.resistance_slabe.copy()
+verif_rupt, efforts_max,_, df_rupt_defect = (filaires.analyse_efforts_rupteurs(
+    pages_rupteur["Efforts_filaires"],
+    pages_rupteur["Description_filaires"],
+    resistance_slabe=ndc.resistance_slabe,
+    gamma=gamma
+    ))
+# On renomme les index de efforts max
+for slabe in efforts_max:
+    efforts_max[slabe]["Fx_Ed"] = efforts_max[slabe].pop("Fx")
+    efforts_max[slabe]["Fy_Ed"] = efforts_max[slabe].pop("Fy")
+    efforts_max[slabe]["Fz_Ed"] = efforts_max[slabe].pop("Fz")
+# Sous-titre
+st.subheader("Analyse des efforts dans les rupteurs ")
+# Affichage de l'éat des vérification des efforts dans les rupteurs
+if verif_rupt:
+    st.success("Les efforts appliquées aux différents rupteurs sont tous inférieurs aux efforts résistants")
+else:
+    st.error("Attention, certains rupteurs subissent des efforts trop importants !")
+# Séparation en 4 colonnes
+col5, col6, col7, col_rupt_defect = st.columns([1.9, 2.1, 2, 1.4], gap="small")
+#Affichage des efforts max appliqués à chaque modèle de rupteur
+with col5:
+    st.write("Efforts maximaux appliqués aux rupteurs (kN)")
+    df_efforts_max = pd.DataFrame(efforts_max).transpose()
+    st.dataframe(abs(df_efforts_max), use_container_width=True)
+# Affichage des efforts max majorés par gamme appliqués à chaque modèle de rupteur
+with col6:
+    st.write("Efforts max majorés appliqués aux rupteurs (kN)")
+    df_efforts_max = pd.DataFrame(efforts_max).transpose()*gamma
+    df_efforts_max.columns = ["Fx_Ed_maj", "Fy_Ed_maj", "Fz_Ed_maj"]
+    st.dataframe(abs(df_efforts_max), use_container_width=True)
+    info_gama = st.info(
+        f"La classe de ductilité {classe_duct} implique d'utiliser un coefficient majorateur γ = {gamma} "
+        f"lors de la vérification des efforts dans les rupteurs")
+# Affichage des résistances de tous les modèles de rupteur
+with col7:
+    st.write("Efforts résistants des rupteurs (kN)")
+    df_resistance_slb = pd.DataFrame(resistance_slb).transpose()
+    st.dataframe(df_resistance_slb, use_container_width=True)
+# Menu déroulant pour afficher les rupteurs trop sollicités
 
-# with col_rupt_defect:
-#     expander = st.expander("Voir les rupteurs trop sollicités")
-#     if not verif_rupt:
-#         with expander:
-#             st.dataframe(df_rupt_defect, use_container_width=True)
-#     else:
-#         st.caption("")
-# st.divider()
+with col_rupt_defect:
+    expander = st.expander("Voir les rupteurs trop sollicités")
+    if not verif_rupt:
+        with expander:
+            st.dataframe(df_rupt_defect, use_container_width=True)
+    else:
+        st.caption("")
+st.divider()
 #-----------------------------------------------------------------------------------------------------------------------
 #                                     Analyse des efforts dans les voiles
 #-----------------------------------------------------------------------------------------------------------------------
