@@ -165,7 +165,7 @@ st.divider()
 #-----------------------------------------------------------------------------------------------------------------------
 #                                     Analyse des efforts dans les rupteurs
 #-----------------------------------------------------------------------------------------------------------------------
-Récupération des DF et des indicateurs de vérification
+#Récupération des DF et des indicateurs de vérification
 resistance_slb = ndc.resistance_slabe.copy()
 verif_rupt, efforts_max,_, df_rupt_defect = (filaires.analyse_efforts_rupteurs(
     pages_rupteur["Efforts_filaires"],
