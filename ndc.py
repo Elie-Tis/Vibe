@@ -4,12 +4,12 @@ import pandas as pd
 from numpy import set_printoptions
 
 # Valeurs des résistances des Slabes ***** A COMPLETER AVEC LES VALEURS REELLES *****
-resistance_slabe = {"SLABE8_Zs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 46.55, "Fz_Rd": 30.10},
-                    "SLABE8_Zs_final": {"Fx_Rd": 110.88, "Fy_Rd": 46.55, "Fz_Rd": 30.10},
-                    "SLABE8_ZAs_initial": {"Fx_Rd": 55.44, "Fy_Rd": 33.10, "Fz_Rd": 23.06},
-                    "SLABE8_ZAs_final": {"Fx_Rd": 55.44, "Fy_Rd": 33.10, "Fz_Rd": 23.06},
-                    "SLABE8_ZZs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13},
-                    "SLABE8_ZZs_final": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13},
+resistance_slabe = {"SLABE8_Zs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 46.55, "Fz_Rd": 45.14},
+                    "SLABE8_Zs_final": {"Fx_Rd": 110.88, "Fy_Rd": 46.55, "Fz_Rd": 45.14},
+                    "SLABE8_ZAs_initial": {"Fx_Rd": 55.44, "Fy_Rd": 33.10, "Fz_Rd": 34.6},
+                    "SLABE8_ZAs_final": {"Fx_Rd": 55.44, "Fy_Rd": 33.10, "Fz_Rd": 34.6},
+                    "SLABE8_ZZs_initial": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 69.2},
+                    "SLABE8_ZZs_final": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 69.2},
                     "SLABE": {"Fx_Rd": 110.88, "Fy_Rd": 66.20, "Fz_Rd": 46.13}
                     }
 
