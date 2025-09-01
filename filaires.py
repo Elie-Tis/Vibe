@@ -86,7 +86,7 @@ def verifier_efforts_slabe(efforts_max, resistance_slabe, gamma):
     validation = True
 #Création d'un dictionnaire qui va contenir des bool pour chaque effort de chaque type de rupteur
     resistance_slabe_verifiee = copy.deepcopy(efforts_max)  # d1 = d2 ne crée pas une copie indépendante, il faut utiliser la méthode deepcopy
-    for slabe in efforts_max:  # On itère sur tous les typs de rupteurs utilisés
+    for slabe in efforts_max:  # On itère sur tous les types de rupteurs utilisés
         print("EFFORT MAX :: ","\n",efforts_max)
         for effort in efforts_max[slabe]:  # On itère sur tous les efforts
 # On vérifie si l'effort ne dépasse pas l'effort resistant du rupteur
